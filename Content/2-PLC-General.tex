@@ -1,10 +1,70 @@
 %% ==============================
-\section{\iflanguage{ngerman}{Speicherprogrammierbare Steuerung}{Programmable Logic Controllers}}
+\section{Programmable Logic Controllers}
 \label{sec:plc}
 %% ==============================
+
+This section explains the basics of~\glspl{acn:plc} and their programming model.
 
 \subsection{General}
 
 \dots
 
 \subsection{Programming with IEC 61131-3 Languages}
+
+\lstset{language=Pascal}
+\begin{lstlisting}[caption={Example of~\gls{acn:ST} code. Source:~\cite{Wiki:ST}},label=lst:ex:st]
+// PLC configuration
+CONFIGURATION DefaultCfg
+	VAR_GLOBAL
+		// Global variable to represent a boolean.
+		b_Start_Stop  : BOOL;
+		// Global variable to represent a boolean.
+		b_ON_OFF      : BOOL;
+		// Digital   input of the PLC (Address 0.0)
+		Start_Stop AT %IX0.0:BOOL;
+		// Digital output of the PLC (Address 0.0). (Coil)
+		ON_OFF     AT %QX0.0:BOOL;
+	END_VAR
+
+	// Schedule the main program to be executed every 20 ms
+	TASK Tick(INTERVAL := t#20ms);
+
+	PROGRAM Main WITH Tick : Monitor_Start_Stop;
+END_CONFIGURATION
+
+// Actual Program
+PROGRAM Monitor_Start_Stop          
+	VAR_EXTERNAL
+		Start_Stop  : BOOL;
+		ON_OFF      : BOOL;
+	END_VAR
+	VAR
+		// Temporary variables for logic handling     
+		ONS_Trig    : BOOL;
+		Rising_ONS  : BOOL;
+	END_VAR
+
+	// Start of Logic
+	// Catch the Rising Edge One Shot of the Start_Stop input
+	ONS_Trig    := Start_Stop AND NOT Rising_ONS;
+
+	// Main Logic for Run_Contact -- Toggle ON / Toggle OFF ---
+	ON_OFF := (ONS_Trig AND NOT ON_OFF) OR (ON_OFF AND NOT ONS_Trig);
+
+	// Rising One Shot logic   
+	Rising_ONS := Start_Stop;
+END_PROGRAM
+\end{lstlisting}
+
+\lstset{language=[x86masm]Assembler}
+\begin{lstlisting}[caption={Example of~\gls{acn:IL} code. Source:~\cite{Beckhoff:IL}},label=lst:ex:il]
+LD     TRUE          (*load TRUE in the accumulator*)
+ANDN   BOOL1         (*execute AND with the negated value of the BOOL1 variable*)
+JMPC   label         (*if the result was TRUE, then jump to the label "label"*)
+LDN    BOOL2         (*save the negated value of *)
+ST     ERG           (*BOOL2 in ERG*)
+label:
+
+LD     BOOL2         (*save the value of *)
+ST     ERG           (*BOOL2 in ERG*)
+\end{lstlisting}
