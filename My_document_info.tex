@@ -1,0 +1,108 @@
+%% Version: 0.8 (12.02.2019)
+
+%% My_document_info.tex
+%% Copyright 2020 KIT, IAR-IPR (Denis Štogl)
+%% Mail: denis.stogl@kit.edu
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2005/12/01 or later.
+%
+% This work has the LPPL maintenance status `maintained'.
+%
+% The Current Maintainer of this work is M. Y. Name.
+%
+% This work consists of the files pig.dtx and pig.ins
+% and the derived file thesis.tex.
+
+
+\title{Automated Programming of PLCs}
+\titleotherlanguage{Automatische Programmierung von PLCs}
+
+\author{David Oberacker}
+\address{Jarnyweg 13}
+\city{76351 Linkenheim-Hochstetten}
+\email{david.oberacker@student.kit.edu}
+
+\keywords{Keywords, of, my, Thesis, Keywords, of, my, Thesis, Keywords, of, my, Thesis, Keywords, of, my, Thesis, Keywords, of, my, Thesis, Keywords, of, my, Thesis, Keywords, of, my, Thesis}
+\keywordsotherlanguge{Die, Stichw\"orter, f\"ur, meine, Arbeit, Die, Stichw\"orter, f\"ur, meine, Arbeit, Die, Stichw\"orter, f\"ur, meine, Arbeit, Die, Stichw\"orter, f\"ur, meine, Arbeit, Die, Stichw\"orter, f\"ur, meine, Arbeit}
+
+%% Study program or a seminar/subject
+\studyprogram{Intelligente Industrieroboter}
+
+%% IMPORTANT: Seminar only: If not "Seminar Intelligente Industrieroboter" uncomment this
+% \nogrouplogo
+
+%% Name of your institute (Default: IAR-IPR)
+% \institute{Test}
+%% Name of your faculty (Default: KIT-Fakultät für Informatik
+% \KITfaculty{This is my Faculty}
+%% Address of your institute (Default: Engler-Bunte-Ring 8)
+% \instituteaddress{}
+% %% Insitute City (Default: 76131 Karlsruhe)
+% \institutecity{}
+
+\reviewerone{Prof. Dr.-Ing. Torsten Kröger}
+\reviewertwo{Prof. Dr.-Ing. habil. Björn Hein}
+%
+% %% The advisors are PhDs or Postdocs
+\advisorone{Dr.-Ing. Christoph Ledermann}
+% %% The second advisor can be omitted
+%\advisortwo{M.Sc. D}
+%
+% %% Please enter the start end end time of your thesis (for techreport not needed)
+\editingtime{24. April 2020}{09. Juli 2020}
+
+%% --------------------------------
+%% | Settings for word separation |
+%% --------------------------------
+% Help for separation:
+% In german package the following hints are additionally available:
+% "- = Additional separation
+% "| = Suppress ligation and possible separation (e.g. Schaf"|fell)
+% "~ = Hyphenation without separation (e.g. bergauf und "~ab)
+% "= = Hyphenation with separation before and after
+% "" = Separation without a hyphenation (e.g. und/""oder)
+
+% Describe separation hints here:
+\hyphenation{
+% Pro-to-koll-in-stan-zen
+% Ma-na-ge-ment  Netz-werk-ele-men-ten
+% Netz-werk Netz-werk-re-ser-vie-rung
+% Netz-werk-adap-ter Fein-ju-stier-ung
+% Da-ten-strom-spe-zi-fi-ka-tion Pa-ket-rumpf
+% Kon-troll-in-stanz
+}
+
+%%
+%% --------------------
+%% |   Bibliography   |
+%% --------------------
+\newcommand{\mybibliographyfiles}{Bibliography/my_thesis_bibliography}
+
+
+%% --------------------
+%% |     Acronyms     |
+%% --------------------
+\newacronym{acn:ipr}{IAR-IPR}{Institute for Anthropomatics and Robotics - Intelligent Process Control and Robotics}
+\newacronym{acn:plc}{PLC}{\gls{gls:plc}}
+
+%% --------------------
+%% |     Glossary     |
+%% --------------------
+\newglossaryentry{gls:robot}
+{
+    name=robot,
+    description={The robot developed in this work.}
+}
+
+\newglossaryentry{gls:plc}{
+	name={Programmable Logic Controller},
+	description={
+		A programmable logic controller (PLC) or programmable controller is an industrial digital computer which has been ruggedized and adapted for the control of manufacturing processes, such as assembly lines, or robotic devices, or any activity that requires high reliability, ease of programming and process fault diagnosis.~\cite{Wiki:Plc}
+	}
+}

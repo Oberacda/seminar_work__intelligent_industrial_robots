@@ -1,0 +1,125 @@
+% !TeX document-id = {4b2b7ac1-93c5-4ea7-94ea-3424b3592d6f}
+%&tex
+% !TEX program = xelatex
+% !TeX TS-program = xelatex
+% !BIB TS-program = biber
+% !TeX encoding = UTF-8
+% !TeX spellcheck = en_US
+% !TeX root = ./thesis.tex
+
+%% Version: 0.6 (03.01.2019)
+
+%% Choose language: english or german
+%% Choose Thesis type: seminar, bachelor, master, phd, techreport
+%% Use 'declaration' parameter if you want to generate declaration page
+%% Use 'final' to disable Todo-notes from final version without deleting each one of them
+\documentclass[english,seminar]{KITthesis}
+
+%% ---------------------------------
+%% | Information about the thesis  |
+%% ---------------------------------
+\include{My_document_info}
+
+%% ------------------------
+%% |    Including files   |
+%% ------------------------
+% Only files listed here will be included!
+% Userful command for partially translating the document (for bug-fixing e.g.)
+\includeonly{%
+	Content/0-Declaration,
+	Content/0-Abstract_EN,
+	Content/0-Abstract_DE,
+	Content/1-Introduction,
+	Content/2-PLC-General,
+	Content/3-C-Based-Programming,
+	Content/4-Formal-Methods,
+	Content/5-Risks,
+	Content/8-Conclusion,
+%	Content/11-Appendix,
+}
+
+\settitle
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Here, main documents begins %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+	
+	%% Uncomment this to use only first authors name in bibliography
+	% \bstctlcite{BSTcontrol}
+	
+	%% Set PDF metadata
+	\setpdf
+	
+	%% Title Page
+	\includetitle
+	
+	% TODO: Remove this from final version
+	%\includelistoftodos
+	
+	\includedeclaration
+	
+	%\includeacknowledgments
+	
+	%% ----------------
+	%% |   Abstract   |
+	%% ----------------
+	%% An abstract both in English
+	%% and German is mandatory.
+	%%
+	%% The text is included from the following files:
+	%% - Content/0-Abstract_EN
+	%% - Content/0-Abstract_DE
+	\includeabstract
+	
+	%% ------------------------
+	%% |   Table of Contents  |
+	%% ------------------------
+	\inculdetableofcontents
+	
+	\makenomenclature
+	
+	%% -----------------
+	%% |   Main part   |
+	%% -----------------
+	\setmainpart
+	
+	\include{Content/1-Introduction}
+	\include{Content/2-PLC-General}
+	\include{Content/3-C-Based-Programming}
+	\include{Content/4-Formal-Methods}
+	\include{Content/5-Risks}
+	\include{Content/8-Conclusion}
+	
+	%% --------------------
+	%% |   Bibliography   |
+	%% --------------------
+	\nocite{*}
+	\Bibliography
+	
+	%% ----------------
+	%% |   Appendix   |
+	%% ----------------
+	\cleardoublepage
+%	\include{Content/11-Appendix}
+	
+	% Remove if needed
+	%% -----------------------------
+	%% |   List of Figures/Tables  |
+	%% -----------------------------
+	\includeglossaries
+	%\inculdelistoffigures
+	%\inculdelistoftables
+	%\inculdelistoflistings
+	%\inculdelistofalgoritms
+	
+	%% --------------------
+	%% |   MyBib Entry    |
+	%% --------------------
+	\addmybibentry
+	
+	%% --------------------------------
+	%% |   How to use this document   |
+	%% --------------------------------
+	%\includehowtouse
+	
+\end{document}

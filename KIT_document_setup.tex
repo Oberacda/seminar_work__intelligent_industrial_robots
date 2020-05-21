@@ -1,0 +1,211 @@
+%&tex
+% !TEX program = xelatex
+% !TeX TS-program = xelatex
+% !BIB TS-program = biber
+% !TeX encoding = UTF-8
+% !TeX spellcheck = en_US
+% !TeX root = ./thesis.tex
+
+%% --------------
+%% | Typography |
+%% --------------
+
+% T1 font encoding
+\usepackage[T1]{fontenc}
+% \usepackage[utf8]{inputenc}
+
+% serif type: Linux Libertine
+% \RequirePackage{libertine}
+% Linux Libertine in math mode
+% \RequirePackage[libertine]{newtxmath}
+
+%% ---------------------------
+%% | References in PDF       |
+%% ---------------------------
+\usepackage[hyphens]{url}
+\usepackage[breaklinks,colorlinks=true,xetex,pageanchor=false]{hyperref}
+
+%% --------------
+%% | Packages   |
+%% --------------
+\usepackage[nooneline,bf]{caption} % Figure descriptions from left margin
+\usepackage{times}
+\usepackage{csquotes}
+% \usepackage{titling}
+
+% numbers option provides compact numerical references in the text.
+\usepackage[
+	backend=biber,
+	style=numeric-comp,
+	citestyle=numeric-comp]{biblatex}
+	
+\addbibresource{Bibliography/my_thesis_bibliography.bib}
+
+%% --------------
+%% | Graphics, Figures, Tables   |
+%% --------------
+\usepackage[dvips,xetex]{graphicx}
+\usepackage{epic}
+\usepackage{eepic}
+\usepackage{epsfig}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{float} % damit Tabellen und Grafiken sich selbst ausrichten dürfen und nicht zwangshaft an einer Stelle stehen. verhindern kann man das mit [H]
+\usepackage{subcaption}
+% \usepackage[table]{xcolor}
+% \usepackage{color}
+% \usepackage{transparent}
+
+\usepackage{colortbl}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{longtable}
+\usepackage{booktabs}
+
+\usepackage{rotating}
+\usepackage{hhline}
+\usepackage{tabularx}
+
+%% --------------
+%% | Listings    |
+%% --------------
+\usepackage{algorithm}		  % Code-Listings
+\usepackage{algpseudocode}    % algorithmicx with layout
+%\usepackage{algorithmic}	  % Code-Listings
+% see http://www.ctan.org/tex-archive/macros/latex/contrib/algorithm2e/algorithm2e.pdf
+% for more sophisticated algorithm listings
+\usepackage{listings}
+
+\lstset{
+language=Python,
+basicstyle=\small\ttfamily,
+numbers=left,
+numbersep=5pt,
+xleftmargin=20pt,
+frame=tb,
+framexleftmargin=20pt
+}
+% Make listings similar to algorithm environment
+\DeclareCaptionFormat{mylst}{\hrule#1#2#3}
+\captionsetup[lstlisting]{format=mylst,labelfont=bf,singlelinecheck=off,labelsep=space}
+
+
+%% ------------------------------------------
+%% | Glossary, Acronyms and Nomenclature    |
+%% ------------------------------------------
+\usepackage[acronym,toc]{glossaries}
+\usepackage{nomencl}
+
+\makeglossaries
+
+%% --------------
+%% | Margins    |
+%% --------------
+\usepackage{vmargin}          % Adjust margins in a simple way
+\usepackage[absolute,overlay]{textpos}
+
+%% --------------
+%% | Math       |
+%% --------------
+\usepackage{grffile}
+\usepackage{amsmath}
+\usepackage{amstext}
+\usepackage{amssymb}
+\usepackage{bm}
+% https://www.dpg-physik.de/dpg/gliederung/junge/rg/wuerzburg/Archiv/WS%202011-12/LaTeX/siunitx.pdf
+\usepackage{siunitx} % für alle SI-Einheiten (siehe Siunitx.pdf) \SI[per-mode=symbol]{56}{\gram\per\square\meter}
+
+\usepackage{textcomp}
+\usepackage{enumerate}
+\usepackage[inline]{enumitem}
+
+
+%% ------------------------------
+%% | TODOs and Dummy Text       |
+%% ------------------------------
+\setlength {\marginparwidth }{2cm}
+\ifKITthesis@final
+  \usepackage[disable]{todonotes}
+\else
+\iflanguage{ngerman}{
+  \usepackage[colorinlistoftodos,ngerman]{todonotes} %See: https://www.ra.informatik.tu-darmstadt.de/fileadmin/user_upload/Group_RA/eiwa/todonotes.pdf
+}{
+  \usepackage[colorinlistoftodos]{todonotes} %See: https://www.ra.informatik.tu-darmstadt.de/fileadmin/user_upload/Group_RA/eiwa/todonotes.pdf
+}
+\fi
+
+\usepackage{blindtext}
+
+% My Todo commands
+\newcommand{\todoin}[1]{\todo[inline]{#1}}
+\newcommand{\todoBetter}[1]{\todo[color=blue]{#1}}
+\newcommand{\todoBetterin}[1]{\todo[color=blue,inline]{#1}}
+\newcommand{\todoAdd}[1]{\todo[color=green]{#1}}
+\newcommand{\todoAddin}[1]{\todo[color=green,inline]{#1}}
+\newcommand{\todoCopied}[1]{\todo[color=yellow]{This is copied and needs to bo reworded: #1}}
+\newcommand{\todoCopiedin}[1]{\todo[color=yellow,inline]{This is copied and needs to bo reworded:} {\color{yellow}#1}}
+
+%% --- End of Packages ---
+
+
+%% -------------------------------
+%% |        Declarations         |
+%% -------------------------------
+\pgfplotsset{compat=newest}
+\pgfplotsset{plot coordinates/math parser=false}
+%% the following commands are needed for some matlab2tikz features
+\usetikzlibrary{plotmarks}
+\usetikzlibrary{arrows.meta}
+\usepgfplotslibrary{patchplots}
+
+\graphicspath{{Figures/}{../jpeg/png/svg/gif/}}
+
+\newcommand\setpdf{
+
+  \let\theauthor\@author
+  \let\thetitle\@title
+
+  \hypersetup{
+    bookmarks=true,         % show bookmarks bar?
+    unicode=true,          % non-Latin characters in Acrobat's bookmarks
+    pdftoolbar=true,        % show Acrobat's toolbar?
+    pdfmenubar=true,        % show Acrobat's menu?
+    hyperindex=true,
+    plainpages=false,
+    pdfpagelabels=true,
+%     pdffitwindow=false,     % window fit to page when opened
+%     pdfstartview={FitH},    % fits the width of the page to the window
+    pdftitle={\thethesistype},    % title
+    pdfauthor={\@author},     % author
+    pdfsubject={\thetitle},   % subject of the document
+    pdfcreator={\@author},   % creator of the document
+    pdfproducer={\@author}, % producer of the document
+%     pdfkeywords={\keywords}, % list of keywords
+%     pagebackref =true,
+%     pdfnewwindow=true,      % links in new window
+    colorlinks=true,       % false: boxed links; true: colored links
+    linkcolor=black,          % color of internal links (change box color with linkbordercolor)
+    citecolor=black,        % color of links to bibliography
+    filecolor=black,      % color of file links
+    urlcolor=black           % color of external links
+%     pdfborder={0 0 0},%
+%     linkcolor=kit-blue100,%
+%     citecolor=kit-green100,%
+%     urlcolor=kit-red100
+  }
+}
+
+\newcommand\tab[1][1cm]{\hspace*{#1}}
+
+\newcommand{\comment}[1]{}
+
+\ifKITthesis@final
+    \newcommand{\afterReview}[1]{#1}
+    \newcommand{\afterReviewFig}[1]{#1}
+\else
+    \newcommand{\afterReview}[1]{{\color{magenta}#1}}
+    \newcommand{\afterReviewFig}[1]{\colorbox{magenta}{#1}}
+\fi
+
+%% --- End of Declarations ---
+
