@@ -608,19 +608,19 @@
 %%%
 \newcommand{\inculdelistoffigures}{}
 \renewcommand{\inculdelistoffigures}{
-	\listoffigures \addcontentsline{toc}{chapter}{\listfigurename}
+	\listoffigures \addcontentsline{toc}{section}{\listfigurename}
 }
 \newcommand{\inculdelistoftables}{}
 \renewcommand{\inculdelistoftables}{
-	\listoftables \addcontentsline{toc}{chapter}{\listtablename}
+	\listoftables \addcontentsline{toc}{section}{\listtablename}
 }
 \newcommand{\inculdelistoflistings}{}
 \renewcommand{\inculdelistoflistings}{
-	\lstlistoflistings \addcontentsline{toc}{chapter}{\lstlistlistingname}
+	\lstlistoflistings \addcontentsline{toc}{section}{\lstlistlistingname}
 }
 \newcommand{\inculdelistofalgoritms}{}
 \renewcommand{\inculdelistofalgoritms}{
-	\listofalgorithms  \addcontentsline{toc}{chapter}{\listalgorithmname}
+	\listofalgorithms  \addcontentsline{toc}{section}{\listalgorithmname}
 }
 
 \newcommand{\setmainpart}{
