@@ -37,7 +37,7 @@ Logos/KITlogo_Frabe_english.png
 *.tdo
 *.nlo
 
-#*.pdf
+*.pdf
 
 # Freecad backup files
 *.fcstd1
