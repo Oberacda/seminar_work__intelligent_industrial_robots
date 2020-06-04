@@ -10,11 +10,35 @@
 \label{sec:formal_methods}
 %% ==============================
 
-\dots
+Two of the most important aspects when programming a~\glspl{acn:plc} are validation and verification.
+Validation describes the correctness of the specification compared to the intended use and verification is the correctness of the actual code compared to the specification.
+Both of these aspects ensure that the system behaves as intended.
+As~\glspl{acn:plc} are used for real-time applications, the importance of these factors increases even more.
+The previously described methods for programming with C offered possibilities in that regard, but they did not improve significantly compared to the IEC 61131-3 languages.
+Therefore in this section I am investigating the possibilities of using a formal specification to automatically program a PLC.
+This allows to easier validate and verify the code that developed.
+\citeauthor{Frey:2000aa}\todo{Formal methods in PLC programming} describe different approaches to verification and validation for~\acrshort{acn:plc} programming.
+This paper also gives an overview of different methods that can be used to archive this.
+From this overview I investigated the three most used techniques in the following section.
 
-\todo[inline]{Formal methods in PLC programming}
+There a several methods for creating a formal specification of a process or controller.
+One method is to use a formal language to specify the behavior in rules.
+This method allows for easier verification and validation as the specification and code can checked via formal theorem solvers.
+Approaches employing this method are described in subsection~\ref{sec:sub:flb}.
 
-\todo[inline]{Approach for an automated safety configuration for robot applications}
+Another method is to use a modeling language to create a system specification.
+A modeling language allows the user to create a structural and behavioral specification of the system.
+This is in contrast to the formal languages that only describe behavioral details, but not structures.
+They also allow for simulation of the system components making it easier to evaluate and validate the system.
+In software development, model specifications like~\acrfull{acn:uml} are common practice.
+The usage of a model can also provide a overview of the system and increase modularity.
+In subsection~\ref{sec:sub:mb} I investigate approaches using this specification type.
+
+The last approach I investigate are graph based specifications.
+They are often used for behavioral descriptions in modeling languages but can also be used just to create a behavioral model.
+They use system states and transitions between the states to model a event reaction semantic of the system.
+Common approaches here are petri nets and condition graphs.
+I describe these approaches in subsection~\ref{sec:sub:graph}.
 
 \subsection{Formal Language Based}
 
