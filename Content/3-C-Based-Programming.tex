@@ -15,7 +15,7 @@ Its closeness to the actual hardware, the access to low level features, like mem
 Today big parts of operating systems, many embedded and real-time applications are written in C.
 This makes it a prime candidate for~\acrshort{acn:plc} programming.
 As its initial introduction was in the year 1972~\cite{10.5555/576122}, there are many libraries and frameworks available today, that are implemented in C.
-The importance as a system programming language has also sparked intensive research in the field of formal verification of C code\todo{Add citation for formal C verification programs.}.
+The importance as a system programming language has also sparked intensive research in the field of formal verification of C code\todo[color=green]{Add citation for formal C verification programs.}.
 
 It is a standardized ISO language~\cite{ISO:9899:2018}, with the current C18 standard.
 The most common and best supported C standard is the ANSI C / C90 standard from 1990.
@@ -30,12 +30,45 @@ As PLC's were programmed by them, they developed languages that abstracted the p
 
 Nowadays many people are proficient in programming, allowing the usage of C in automation tasks.
 Therefore there are some~\acrshort{acn:plc} environments that allow for the developer to use C and C++ to program their~\acrshort{acn:plc}.
-In this section I am going to the two major environments that allow for pure C/C++ programming on~\acrshort{acn:plc}.
+Many model driven systems and simulators allow for the generation of C code from a model, therefore C support is a important part for automated programming when looking at non PLC specific methods.
+Even without being fully automated programming of a PLC itself, the extended possibility when using C / C++ as a programming language are worth investigating.
+Therefore, in this section I am going describe two major PLC environments that allow for pure C/C++ programming on~\acrshort{acn:plc}'s.
 
 \subsection{B \& R Automation Studio}
+B \& R Automation Studio~\cite{b-r_automation:2020} is developed by Austrian company B\&R, a subsidiary of the swiss company ABB, one of the worlds leading PLC manufactures.
+It can be used to program all PLC's and Industrial-PC's manufactured by B\&R.
+
+In the current version all of the IEC 61131-3 languages and ANSI C are fully supported.
+Additionally support for C++ is possible, but this doesn't support the full feature set of the language.
+
+You can define a cyclic task executed with a specific deadline in C code.
+For this you have to define the input and output, as well as the permanent variables, which are then inserted into every cycle execution.
+In the module you can use all features of the C standard library that are not dependent on the UNIX operating system (like file system operations, etc.).
+This allows for the reuse and verification of control code, as it follows the common C standards.
+
+In addition to C, C++ is also partially supported.
+This allows for object oriented development that may be required in more complex control tasks.
+
+Another feature is the integration of multiple different languages.
+As they all are managed in the same runtime environment, the results of a C program can be used in a~\acrfull{acn:ST} or~\acrfull{acn:LD} program, and the other way around.
+With this a separation of concerns can be realized, allowing for faster development and reuse of control code.
+
+This toolkit can decrease the development time and effort of programming a~\acrshort{acn:plc} significantly.
 
 \todo[inline]{B \& R Automation Studio C/C++ Module Support}
 
 \subsection{Beckhoff TwinCAT 3}
+
+Another interesting approach to C/C++ based PLC programming, is the Beckhoff TwinCAT~\cite{Beckhoff:2020:2} environment.
+Instead of a pure PLC only runtime, they build a operating system extension for Microsoft Windows that allows to run code with PLC semantics on industrial PC's as well as real PLC's.
+This combination of industrial grade PC's and PLC's allows for a integrated system where automation controllers and higher-abstraction systems, like production databases can communicate seamlessly.
+Another benefit is the combination of real-time tasks, like control loops, and non-real-time tasks, like visualization, in one system runtime.
+
+The integration of C/C++ code here is done via modules.
+A module is a component in the runtime, that is executed standalone and communicates over the runtime, as a middleware layer, with other modules.
+Modules can be assigned different time behaviors either as real-time or non real-time tasks.
+Additionally modules can communicate with one another to create more complex systems.
+
+Another interesting feature of this environment is that it supports the direct usage of simulation models as runtime modules.
 
 \todo[inline]{Beckhoff TwinCAT3 industrial PC C/C++ Runtime Modules}
