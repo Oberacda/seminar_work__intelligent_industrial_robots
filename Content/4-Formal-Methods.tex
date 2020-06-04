@@ -40,9 +40,56 @@ They use system states and transitions between the states to model a event react
 Common approaches here are petri nets and condition graphs.
 I describe these approaches in subsection~\ref{sec:sub:graph}.
 
+%% ==============================
 \subsection{Formal Language Based}
+\label{sec:sub:flb}
+%% ==============================
 
 \subsubsection{Linear Temporal Logic}
+
+\acrfull{acn:ltl} is a modal logic that allows to specify conditions over time.
+This is done by extending logical operators (and, or, xor, etc.) with temporal operators that specify conditions for the future.
+Formally they operate on a sequence of states over the available variables called a Kripke structure\todo{Citation for LTL and Kripke structures.}.
+Common temporal operators are~"\textbf{X}~\textit{A}" (Next), specifying that a formula~\textit{A} is true in the next state,~"\textit{A}~\textbf{U}~\textit{B}" (Until), specifying that~\textit{A} is true until~\textit{B} is true and~"\textbf{G}~\textit{A}", specifying~\textit{A} is true in all states.
+With these temporal operators a~\acrfull{acn:ltl} formula can specify a full state graph for different variable changes.
+A formula is satisfied by a sequence of states~\textit{S} when its true for all states in sequence.
+If a formula is~\textit{valid}, it is satisfied for all possible sequences $ S\in 2^{AP} $ given the set of variables~\textit{AP}.
+
+In this section I will investigate two approaches to automated PLC programming that use~\acrshort{acn:ltl} to validate the specification.
+
+\citeauthor{Kuzmin:2013}~\cite{Kuzmin:2013} use~\acrshort{acn:ltl} to specify the behavior of the controller.
+They then use the formulas to validate the specification with a model checker and then automatically create a~\acrshort{acn:ST} program.
+In this approach, the variables for the~\acrshort{acn:ltl} are all input variables, output variables and state variables that are used in the PLC program.
+For specifying the behavior of the controller a~\acrfull{acn:ltl} formula defines the change of a variable given a system condition.
+To simplify this process they restrict the values of the variables to boolean and numerical values and only allow one value change per variable per PLC working cycle.
+\begin{equation}
+GX\left(V > \_V \rightarrow OldValCond \land FiringCond \land V := NewValExpr \right)
+\label{eq:increase}
+\end{equation}
+\begin{equation}
+GX\left(V > V \rightarrow OldValCond' \land FiringCond' \land V := NewValExpr' \right)
+\label{eq:decrease}
+\end{equation}
+Equation~\ref{eq:increase} shows the proposed~\acrshort{acn:ltl} formula for increasing a variable V given a~\textit{OldValCond} and a~\textit{FiringCond}, equation~\ref{eq:decrease} show the decrease of V.
+They define these conditions for all possible alterations of boolean and numerical values.
+The pair of~\acrshort{acn:ltl} for increasing and decreasing a variable can be translated to a ST program block.
+\lstset{language=Pascal}
+\begin{lstlisting}[caption={
+Auto-generated~\gls{acn:ST} code realizing the~\acrshort{acn:ltl} formulas~\ref{eq:decrease} and~\ref{eq:increase}.},label=lst:ltl:st]
+IF OldVarCond AND FiringCond THEN
+    V := NewValExpr; (*V+*)
+ELSIF OldVarCond' AND FiringCond' THEN
+    V := NewValExpr'; (*V-*)
+END_IF
+\end{lstlisting}
+Listing~\ref{lst:ltl:st} shows the~\acrshort{acn:ST} code for the equations~\ref{eq:increase} and~\ref{eq:decrease}.
+Additionally they propose a transformation to model checker code that allows to verify the integrity of the model.
+This is done by finding a sequence of inputs where one of the LTL formula is not satisfied.
+If such a sequence is found, it shows that not all LTL formula a valid, which suggests that the specification is incomplete.
+If the LTL formulas are valid, there is no possible state of variables where the program is not acting as specified.
+With this method, the verification of the control program is easier as it can be done directly from the specification.
+But the authors don't provide a formal verification of the transformation and argue with the obvious correctness of the transformation.
+This full transformation functions and an example can be found in the paper.
 
 \todo[inline]{Construction and Verification of PLC Programs by LTL Specification}
 
@@ -53,6 +100,7 @@ I describe these approaches in subsection~\ref{sec:sub:graph}.
 \todo[inline]{PLC Code Generation Based on a Formal Specification Language}
 
 \subsection{Model Based}
+\label{sec:sub:mb}
 
 \subsubsection{UML / SysML}
 
@@ -70,5 +118,8 @@ I describe these approaches in subsection~\ref{sec:sub:graph}.
 
 
 \subsection{Graph Based}
+\label{sec:sub:graph}
 
 \todo[inline]{Template-Based Generation of PLC Software from Plant Models Using Graph Representation}
+
+\cite{Frey:2000:2}
