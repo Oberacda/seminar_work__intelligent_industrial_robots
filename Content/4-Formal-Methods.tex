@@ -75,7 +75,7 @@ They define these conditions for all possible alterations of boolean and numeric
 The pair of~\acrshort{acn:ltl} for increasing and decreasing a variable can be translated to a ST program block.
 \lstset{language=Pascal}
 \begin{lstlisting}[caption={
-Auto-generated~\gls{acn:ST} code realizing the~\acrshort{acn:ltl} formulas~\ref{eq:decrease} and~\ref{eq:increase}.},label=lst:ltl:st]
+Auto-generated~\gls{acn:ST} code realizing the~\acrshort{acn:ltl} formulas~\ref{eq:decrease} and~\ref{eq:increase}.~\cite{Kuzmin:2013}},label=lst:ltl:st]
 IF OldVarCond AND FiringCond THEN
     V := NewValExpr; (*V+*)
 ELSIF OldVarCond' AND FiringCond' THEN
@@ -91,9 +91,39 @@ With this method, the verification of the control program is easier as it can be
 But the authors don't provide a formal verification of the transformation and argue with the obvious correctness of the transformation.
 This full transformation functions and an example can be found in the paper.
 
-\todo[inline]{Construction and Verification of PLC Programs by LTL Specification}
-
-\todo[inline]{Synthesizing Executable PLC Code for Robots from Scenario-Based GR(1) Specifications}
+The second approach by~\citeauthor{10.1007/978-3-319-74730-9_23}~\cite{10.1007/978-3-319-74730-9_23} uses a~\acrfull{acn:dsl} to describe the control program.
+This~\acrshort{acn:dsl} is then validated by transforming it into~\acrshort{acn:ltl} formula and using a model checker.
+The actual~\acrshort{acn:plc} code is created by transforming the~\acrshort{acn:dsl} into a~\acrshort{acn:ST} control program.
+They use a event \& response semantic for execution so that the system uses controlled transitions to react to unpredictable environment changes.
+The~\acrshort{acn:dsl} allows the engineer to specify a scenario based behavior.
+A scenario consists of guarantees, modeling the behavior of the system in a given situation, and assumptions, modeling the assumptions the engineer can make of the environment of the system.
+An example from the publication~\cite{10.1007/978-3-319-74730-9_23} for a guarantee would be~"\textit{After picking up an item, the feed arm must move to the press, release the item into the press, and finally move back to the feed belt.}" and one of the related assumptions~"\textit{After a robot arm is instructed to pick up an item, it will eventually pick up that item.}.
+These guarantees and assumptions can be specified in the~\acrfull{acn:sml}, the~\acrshort{acn:dsl} they use.
+They are defined for every controllable, output entities to define their reaction to input, uncontrollable entities.
+Additional keywords for flow control, liveness and safety conditions enable the engineer to give constrains to the specification.
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{./Figures/sml_press_beh.png}
+	\caption[\acrshort{acn:sml} specification example.]{Example~\acrshort{acn:sml} specification for the behaviour of a press.~\cite{10.1007/978-3-319-74730-9_23}}
+	\label{fig:sml_press}
+\end{figure}
+Figure~\ref{fig:sml_press} shows an example of a behavior formalization.
+The wait conditions are for flow control and the urgent statements interrupt the current non urgent operation of the controller and prioritize this task.
+They provide a Eclipse based tool named ScenarioTools to create these specifications.
+The specification is transformed into a game graph, where nodes are the currently active events and the edges are either controllable or uncontrollable input events.
+This graph is a game between the controller and the environment, where the controller tries to reach a state with no liveness scenarios and the environment attempts the opposite.
+This can be solved with a General Reactivity of rank 1 solving algorithm.
+In this GR(1) problem instance, LTL formula with the form
+\begin{equation}
+\left(\land_{i}\square\diamond a_{i} \right) \rightarrow \left(\land_{i}\square\diamond g_{i} \right)
+\end{equation}
+have to be solved, where $a_{i}$ is assumption i is satisfied and $g_{i}$ is guarantee i is satisfied.
+If there is a path through the graph where the assumptions hold true but the guarantees do not, its a error in the specification.
+This model checking method can be implemented via a~\acrshort{acn:ltl} solver for the transformed GR(1) specification extracted from the~\acrshort{acn:sml} code.
+To generate the ST code, this graph is transformed into nested state machines.
+Per controller there is a primary state machine modeling the current controller status.
+In every possible controller status there are secondary state machines modeling the uncontrollable input components.
+The authors state that this transformation is valid by design.
 
 \subsubsection{PLCspecif}
 
