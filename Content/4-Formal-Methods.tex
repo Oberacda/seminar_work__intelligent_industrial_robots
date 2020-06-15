@@ -19,29 +19,60 @@ Therefore in this section I am investigating the possibilities of using a formal
 This allows to easier validate and verify the code that developed.
 \citeauthor{Frey:2000aa}\todo{Formal methods in PLC programming} describe different approaches to verification and validation for~\acrshort{acn:plc} programming.
 This paper also gives an overview of different methods that can be used to archive this.
-From this overview I investigated the two most used techniques in the following section.
+Based on this overview I investigated the two most used techniques in the following section.
 
-There a several methods for creating a formal specification of a process or controller.
-One method is to use a formal language to specify the behavior in rules.
-This method allows for easier verification and validation as the specification and code can checked via formal theorem solvers.
-Approaches employing this method are described in subsection~\ref{sec:sub:flb}.
+There a several approaches for creating a formal specification of a process or controller~\cite{Frey:2000aa}.
+One method is to use a non model based approach to specify and verify the behavior.
+This method allows for easier verification and validation as the specification and code can checked without any information about the environment or the process.
+Approaches employing this method are described in subsection~\ref{sec:non_model}.
 
-Another method is to use a modeling language to create a system specification.
+Another approach is to use a modeling language to create a model based specification.
 A modeling language allows the user to create a structural and behavioral specification of the system.
-This is in contrast to the formal languages that only describe behavioral details, but not structures.
-They also allow for simulation of the system components making it easier to evaluate and validate the system.
+This includes modeling process structures and the process itself rather than just the behavior.
+They also allow for simulation of the system components making evaluation and validation closer to the real-world.
 In software development, model specifications like~\acrfull{acn:uml} are common practice.
 The usage of a model can also provide a overview of the system and increase modularity.
 In subsection~\ref{sec:sub:mb} I investigate approaches using this specification type.
 
+In order to compare the different approaches, I look at four criteria that are critical for effective control program development.
+For the selection of the comparison criteria I looked at~\cite{VH:2014}.
+\citeauthor{VH:2014} compare different model-based PLC programming methods.
+From their criteria I selected the four most important ones:
+\begin{itemize}
+	\item \textbf{Effectiveness} describes the quality and expression strength of the programming method.
+	It is determined by the supported programming features, the modularity, the available reuse and the correctness of the model and the transformation.
+	In section~\ref{sec:risks} I investigate the correctness and the associated risks in more detail.
+	\item \textbf{Efficiency} is concerned with the time it takes to create, understand and interact with a model and the generated code.
+	This measure is relevant as improved efficiency over traditional programming is one of the key motivations of automated programming approaches.
+	\item \textbf{User acceptance} looks at the experience of a developer when using a programming approach.
+	Ease of use, required prior knowledge and assistance provided by the approach are key factors here.
+	\item \textbf{Real-world applicability} describes the available toolset and integration with existing platforms used in the industry.
+	The reason for this, is that methods that cannot be employed in a real-world scenario aren't of any use to a developer even if they excel at the other points.
+\end{itemize}
+
 %% ==============================
-\subsection{Formal Language Based}
-\label{sec:sub:flb}
+\subsection{Non Model Based}
+\label{sec:non_model}
 %% ==============================
 
-\todo{Write a section introduction for formal language based methods}
+Non model based approaches don't incorporate any knowledge of the actual process but validate the system for all possible input parameters.
+This is especially interesting as it allows for a more detailed analysis that is not dependent on assumptions about the process.
 
+Here I investigate two formalization methods:
+\ref{sec:sub:ltl} describes approaches using~\acrlong{acn:ltl} as a formalization method.
+In~\ref{sec:sub:plfspecif} looks at the PLCspecif language developed at the CERN.
+
+Another common formalization method are Petri Nets.
+A petri net is a bipartite directed graph, that models a event-transition semantic.
+Originally used in mathematics they were commonly used in the 2000s to model control systems~\cite{Frey:2000:2, Frey:2000aa}.
+I don't investigate approaches using petri nets further as they have become obsolte.
+Modern specification languages incorporate the features of petri nets but use a more user friendly notation.
+Therefore I refrain from elaborating on them any further.
+
+%% ==============================
 \subsubsection{Linear Temporal Logic}
+\label{sec:sub:ltl}
+%% ==============================
 
 \acrfull{acn:ltl} is a modal logic that allows to specify conditions over time.
 This is done by extending logical operators (and, or, xor, etc.) with temporal operators that specify conditions for the future.
@@ -79,11 +110,17 @@ ELSIF OldVarCond' AND FiringCond' THEN
 END_IF
 \end{lstlisting}
 Listing~\ref{lst:ltl:st} shows the~\acrshort{acn:ST} code for the equations~\ref{eq:increase} and~\ref{eq:decrease}.
+As the specifications are complex formulas the efficiency of the specification is reduced significantly.
+The complex nature makes intensive training and knowledge in the area of modal logic necessary.
+This has a bad impact on the user acceptance and real-world applicability as the specifications are too complex and error prone.
 Additionally they propose a transformation to model checker code that allows to verify the integrity of the model.
 This is done by finding a sequence of inputs where one of the LTL formula is not satisfied.
 If such a sequence is found, it shows that not all LTL formula a valid, which suggests that the specification is incomplete.
 If the LTL formulas are valid, there is no possible state of variables where the program is not acting as specified.
 With this method, the verification of the control program is easier as it can be done directly from the specification.
+In combination with the large number of available constructs in~\acrshort{acn:ltl} formula, this provides a considerable effectiveness.
+The only thing missing due to formula based specification are objects or instances.
+Their behavior can be emulated but this requires complex formula constructs.
 But the authors don't provide a formal verification of the transformation and argue with the obvious correctness of the transformation.
 This full transformation functions and an example can be found in the paper.
 
@@ -121,7 +158,10 @@ Per controller there is a primary state machine modeling the current controller 
 In every possible controller status there are secondary state machines modeling the uncontrollable input components.
 The authors state that this transformation is valid by design.
 
+%% ==============================
 \subsubsection{PLCspecif}
+\label{sec:sub:plfspecif}
+%% ==============================
 
 \citeauthor{7819191}~\cite{7819191, darvas2015syntax, darvas2015requirements, darvas2015formal, 10.1007/978-3-319-33693-0_32} define a~\acrshort{acn:dsl} for~\acrshort{acn:plc} behavior specification called PLCSpecif.
 They created the language to allow model driven development on a PLC without having problems with validation and verification.
@@ -149,12 +189,22 @@ There are no advanced transformations but just a plain model to text transformat
 
 \subsection{Model Based}
 \label{sec:sub:mb}
-\todo{Write a section introduction for model based methods}
 
+Model based specifications use a specification of the controller and a model of the process.
+The addition of a process / environment model to the development process allows easier communication and more specific design.
+This approach enables a thorougher validation and verification.
+Commonly simulations and hardware-in-the-loop tests are used to eliminate errors in the early stage of modeling.
+In addition models are often independent of the actual deployment language increasing portability and maintainability over time.
+Model-based development is a stable for designing and developing industrial products and plants.
 
-
+I investigate multiple approaches using model-based specifications to model and define the controller.
+They are grouped by the base modeling language used for the specification.
+In~\ref{sec:sub:uml} I look at approaches using~\acrshort{acn:uml} or~\acrlong{acn:sysml}.
+\ref{sec:sub:simulink} elaborates on methods using the SIMULINK modeling language.
+Lastly~\ref{sec:sub:grafcet} describes a method using the GRAFCET language.
 
 \subsubsection{UML / SysML}
+\label{sec:sub:uml}
 
 \acrfull{acn:uml}~\cite{UML:2-5-1} is a standardize modeling language designed for software engineering.
 It defines twelve different diagram types to cover all aspects of system design.
@@ -240,6 +290,7 @@ Every operation derived from a state in the state machines and the block definit
 This procedure has the benefit of allowing round trip engineering as the generated code can be altered and re-transformed into the model, as long as the edits don't alter the fundamental structure.
 
 \subsubsection{Simulink}
+\label{sec:sub:simulink}
 
 Simulink is a graphical programming environment for developing, simulating and analyzing systems.
 It covers many system domains through a large availability of toolboxes.
@@ -282,6 +333,23 @@ Such a restriction of course reduces portability.
 \label{sec:sub:grafcet}
 
 GRAFCET is a graphical modeling language allows the discrete modeling of control systems.
-
-
-\citeauthor{JULIUS20191767}~\cite{JULIUS20191767}
+It was designed as a modeling language with the IEC 61131-3 languages as implementation languages.
+For this reason it is a reasonable candidate for a code generation based modeling approach.
+The languages uses a similar syntax and semantic to petri nets.
+\begin{figure}
+	\includegraphics[width=\textwidth]{./Figures/grafcet_ex.jpg}
+	\caption[Example of a GRAFCET specification.]{Example of a GRAFCET specification.~\cite{JULIUS2017173}}
+	\label{fig:grafcet}
+\end{figure}
+Common elements are states, state transitions with attached conditions, sub-systems in states and forks of the control flow.
+Figure~\ref{fig:grafcet} shows an example of a GRAFCET specification.
+Here the sub-systems inside a state and the control flow constructs mentioned before can be recognized.
+The full GRAFCET standard is published under the IEC 60848 standard.
+\citeauthor{JULIUS20191767}~\cite{JULIUS20191767, JULIUS2017173} present a ST source code generation algorithm from GRAFCET specifications.
+In~\cite{JULIUS2017173} they present the generation algorithm but without suppling a implementation and addressing time and event constrains.
+With~\cite{JULIUS20191767} they present a Eclipse EMF based editor with an implementation of the generation algorithm.
+Additionally time dependencies and events can be specified and handled.
+Their code generation algorithm ensures that the exact semantics of the GRAFCET specification are transfered to the ST code.
+For this they define a rule-based interpretation algorithm that simulates a GRAFCET execution in ST code.
+In addition to ST code, they can also generate specifications for other PLC code formats like PLCOpenXML and Structured Control Language for Siemens platforms.
+This gives their approach a wide range of target platforms.
