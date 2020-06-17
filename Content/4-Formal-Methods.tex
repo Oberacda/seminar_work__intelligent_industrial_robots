@@ -58,15 +58,13 @@ From their criteria I selected the four most important ones:
 Non model based approaches don't incorporate any knowledge of the actual process but validate the system for all possible input parameters.
 This is especially interesting as it allows for a more detailed analysis that is not dependent on assumptions about the process.
 
-Here I investigate two formalization methods:
-\ref{sec:sub:ltl} describes approaches using~\acrlong{acn:ltl} as a formalization method.
-In~\ref{sec:sub:plfspecif} looks at the PLCspecif language developed at the CERN.
+For non-model based methods I only investigate one formalization method~\acrlong{acn:ltl}, described in~\ref{sec:sub:ltl}.
 
-Another common formalization method are Petri Nets.
-A petri net is a bipartite directed graph, that models a event-transition semantic.
-Originally used in mathematics they were commonly used in the 2000s to model control systems~\cite{Frey:2000:2, Frey:2000aa}.
-I don't investigate approaches using petri nets further as they have become obsolte.
-Modern specification languages incorporate the features of petri nets but use a more user friendly notation.
+Another common formalization method for non model based approaches are Petri Nets.
+A petri net is a bipartite directed graph, that describes a event-transition semantic.
+Originally used in mathematics, they were commonly used in the 2000s to model control systems~\cite{Frey:2000:2, Frey:2000aa}.
+I don't investigate approaches using petri nets further as they have become obsolete.
+Modern specification languages incorporate the features of petri nets but use a more user friendly and clear notation.
 Therefore I refrain from elaborating on them any further.
 
 %% ==============================
@@ -142,7 +140,10 @@ Additional keywords for flow control, liveness and safety conditions enable the 
 \end{figure}
 Figure~\ref{fig:sml_press} shows an example of a behavior formalization.
 The wait conditions are for flow control and the urgent statements interrupt the current non urgent operation of the controller and prioritize this task.
+Such a specification allows for great effectiveness, as most controller scenarios can be covered with it.
+The different roles and guarantees ease the use of specifying behavior, which allows for better ease of use and efficiency.
 They provide a Eclipse based tool named ScenarioTools to create these specifications.
+This greatly increases the actual real-world applicability of the approach, as well as the user acceptance due to increased usability and support during development.
 The specification is transformed into a game graph, where nodes are the currently active events and the edges are either controllable or uncontrollable input events.
 This graph is a game between the controller and the environment, where the controller tries to reach a state with no liveness scenarios and the environment attempts the opposite.
 This can be solved with a General Reactivity of rank 1 solving algorithm.
@@ -156,36 +157,10 @@ This model checking method can be implemented via a~\acrshort{acn:ltl} solver fo
 To generate the ST code, this graph is transformed into nested state machines.
 Per controller there is a primary state machine modeling the current controller status.
 In every possible controller status there are secondary state machines modeling the uncontrollable input components.
+This code generation scheme is beneficial for the efficency and real-world usability of the approach as the developer can trace changes to the code back to the model and the other way around.
+With traceability and maintainability being key factors in industrial applications, this is a important feature.
 The authors state that this transformation is valid by design.
 
-%% ==============================
-\subsubsection{PLCspecif}
-\label{sec:sub:plfspecif}
-%% ==============================
-
-\citeauthor{7819191}~\cite{7819191, darvas2015syntax, darvas2015requirements, darvas2015formal, 10.1007/978-3-319-33693-0_32} define a~\acrshort{acn:dsl} for~\acrshort{acn:plc} behavior specification called PLCSpecif.
-They created the language to allow model driven development on a PLC without having problems with validation and verification.
-Core goals were ease of use, formal verification capability and readability of the generated ST code.
-PLCSpecif uses a composition of modules to describe the behavior of the control program.
-Every module consists of three parts, input specification, core behavior specification and the output specification.
-For the core behavior there are two types of Modules, Composite Modules, where the core describes a sequence of modules, and Leaf Modules, where the core is a single mealy machine.
-To define the transitions in the mealy machine, events can be specified that are triggered when a logic formula using the input variables is evaluating true.
-This model of a control program creates a big state machine from several submodules.
-A pre-processing step is used to translate events and conditionals into transitions that use guard variables and active state variables.
-Such a pre-processing is required to ensure that the transitions run correct and no errors such as infinite loops or non-determinism are present.
-After this step, a SAT solver can verify the correctness of the  transitions by searching for directed cycles of non-event transitions or multiple transitions from one node with equivalent guards.
-They use the mealy machine structure of the system to verify some general features like the absence of dead code or deadlock / livelock freeness.
-Additionally the support the specification of module invariants that can be checked on the final composite model.
-In~\cite{10.1007/978-3-319-33693-0_32} they specify methods to transform existing PLC code to a intermediate model and compare this to a existing PLCSpecif specification.
-They do this by using model equivalence or conformity checks.
-To verify the code generated from PLCSpecify as described in~\cite{7819191} they use the same method than for legacy non generated code.
-For code generation they use, a model to model transformation.
-They transform states into variables or enums, and transitions are translated into IF-THEN blocks.
-In order to fulfill the requirement of readable generated code, the first transform into a abstract ST representation and then use simplification algorithms to reduce the complexity of the code.
-The abstract ST representation is then transformed into the actual ST code.
-This also increases portability as some ST language features are not supported on all PLC platforms.
-The correctness of the transformation is ensured as the structure that is implemented in ST is the transition graph that can be implemented directly.
-There are no advanced transformations but just a plain model to text transformation with the same basic semantics.
 
 \subsection{Model Based}
 \label{sec:sub:mb}
@@ -197,11 +172,12 @@ Commonly simulations and hardware-in-the-loop tests are used to eliminate errors
 In addition models are often independent of the actual deployment language increasing portability and maintainability over time.
 Model-based development is a stable for designing and developing industrial products and plants.
 
-I investigate multiple approaches using model-based specifications to model and define the controller.
+I investigate multiple formalization approaches using model-based specifications to model and define the controller.
 They are grouped by the base modeling language used for the specification.
 In~\ref{sec:sub:uml} I look at approaches using~\acrshort{acn:uml} or~\acrlong{acn:sysml}.
 \ref{sec:sub:simulink} elaborates on methods using the SIMULINK modeling language.
-Lastly~\ref{sec:sub:grafcet} describes a method using the GRAFCET language.
+\ref{sec:sub:grafcet} describes a method using the standardized GRAFCET language.
+Lastly,~\ref{sec:sub:plfspecif} looks at the PLCspecif language developed at the CERN.
 
 \subsubsection{UML / SysML}
 \label{sec:sub:uml}
@@ -255,12 +231,21 @@ For this they use activity and state-charts that are defined for a certain modul
 In a behavior definition for a module, the functions and attributes defined in the structure diagram are used.
 They can be combined to form a state machine depending on different conditions.
 In figure~\ref{fig:modAT_beh} an example of the behavior specification for the stamp press defined in~\ref{fig:modAT_struct} is shown.
-This definition of the structure and behavior of a system can be translated into IEC 61131-3 code to directly run on a~\acrshort{acn:plc}.
+The presented specification language is powerful as enables the developer to specify system behavior and structure in a clear and concise manner.
+In terms of effectiveness, the approach covers many levels of abstraction and covers the full extend of a PLC's capability.
+Additionally the definition of the structure and behavior of a system can be translated into IEC 61131-3 code to directly run on a~\acrshort{acn:plc}.
+This increases efficiency and reduces the number of errors while moving from the model to the code.
 The transformation is described in detail in~\cite{WITSCH2015}.
+\citeauthor{Obermeier:2015aa} conducted a study to investigate the impact the refinements have on user acceptance and efficiency.
+They come the result that their refinements increase the usability and efficiency during development significantly compared to the pure plcML specification and slightly compared to the basic IEC 61131-3 languages.
+In addition they state that their method scales to larger project and more diverse teams in terms of experience.
+This gives the method a good real-world applicability.
 
 \citeauthor{6957399}~\cite{6957399} describe a automatic code generation algorithm for~\acrshort{acn:plc} from a~\acrshort{acn:sml} specification.
 They use the~\acrshort{acn:sml} block diagram and the state-machine diagram to define the full system specification required for code generation.
 To express the system structure they redefine keywords from the SysML block diagram.
+This gives the method good real-world applicability with SysML being a established language that is widely used in the systems design industry.
+It also requires less additional training and development tools than developing a brand new specification method.
 They allow to define a blocks input, outputs, global variables, different classes of organizational units and safe states.
 \begin{figure}
 	\begin{subfigure}{0.5\textwidth}
@@ -281,6 +266,8 @@ In addition to the blocks, a state-machine based model of the block can also be 
 This allows to generate a fully functional block instead of just the framework for it.
 For every state,~\acrshort{acn:ST} code can be specified that is executed when the state is entered.
 A use case for this, is to assign variable values.
+But this restricts the effectiveness of the approach slightly, as not all possibilities of behavior specification can be covered with this method.
+When a process cannot be modeled with a state machine, the specification can only generate a framework and the developer has to write the actual IEC 61131-3 code himself.
 Figure~\ref{fig:sysml:stm} shows the state machine definition for a pump module.
 The pump has the same block definition diagram than the engine shown in~\ref{fig:sysml:bdd}.
 In the comment elements attached to the states, the ST code to run on state entry is defined.
@@ -288,6 +275,7 @@ They implement a template based code generator that uses the previously specifie
 For this the model is converted into a series of ordered operations that have to be executed in a PLC cycle.
 Every operation derived from a state in the state machines and the block definitions is then mapped to ST code.
 This procedure has the benefit of allowing round trip engineering as the generated code can be altered and re-transformed into the model, as long as the edits don't alter the fundamental structure.
+This has a significant impact on efficiency, real-world applicability and user acceptance as the development times can be reduced and its easier for a developer to work with the code as well as the model.
 
 \subsubsection{Simulink}
 \label{sec:sub:simulink}
@@ -299,15 +287,20 @@ A simulink diagram consists of blocks that are connected via signals.
 The aforementioned toolboxes contain a large number of pre-defined blocks realizing a common behavior for a specific domain.
 For example the~\enquote{Discrete} library provides a discrete PID controller that can be used in a closed-feedback loop system.
 Blocks can also be nested allowing the user to create sub-blocks, introducing abstraction levels to a system specification.
-This reduces the complexity and increases usability when designing larger systems.
+The large number of available blocks and the general architecture of the system make Simulink a very effective specification language.
+Its versatility and complexity while still being easy to use, even for designing large systems, are core to its success.
 In addition to the model definition, Simulink provides a large portfolio of verification methods.
 The model can be discretely simulated to observe the systems behavior, static model analysis methods are available and generic test suits can be defined.
 This allows for a extensive model debugging before the model is even deployed to the actual production system or a prototype.
+The workflow of designing, simulating and analyzing is effective and easy to  use.
 For these reasons Simulink is commonly used in control system design and model-driven system development.
+As it is widely used, a transformation approach using Simulink has a good real-world applicability.
 
 Simulink provides a toolbox~\cite{Simulink:PLC} to encode an existing model in the IEC 61131-3 language~\acrshort{acn:ST}, called Simulink PLC coder.
 It can transform a simulink model with input, output and storage nodes as well as nested blocks into a valid ST code implementation that can be run on a PLC.
 For this to work, the blocks have to only use logical functions or mathematical functions.
+This makes the coder very effective as most of the Simulink features can be ported to a PLC without additional effort.
+Of course this also increases the user acceptance and real-world applicability of the method.
 To allow traceability between the transformed model and the Simulink model, the coder can generate a traceability report that shows where and how blocks are implemented in the generated code.
 The coder implements a set of optimization algorithms to reduce the complexity and size of the resulting ST code.
 \citeauthor{7535242}~\cite{7535242} describe a workflow using this Simulink PLC coder and the Simulink C coder to develop, verify and deploy a model created in Simulink on a PLC.
@@ -323,11 +316,14 @@ This allows for a deeper validation of the model than the other methods offered 
 \citeauthor{6489667}~\cite{6489667} compare different code generator approaches for Simulink models to PLC code.
 Additionally they develop their own code generator that transforms Simulink to~\acrfull{acn:CFC}, which is another language that is widely supported for PLC programming.
 They decided to use~\acrshort{acn:CFC}, as its graphical structure does not differ from the Simulink model, which is not the case for ST based code generators.
+This increases user acceptance and efficiency as the transformed code can be read and understood easier as it is close to the model itself.
 Additionally this feature permits re-transformation from the~\acrshort{acn:CFC} model to a Simulink model.
 Hence, operations such as roundtrip engineering can be supported, which is more challenging with ST code.
+This provides a major improvement in real-world applicability and efficiency over the previously investigated approach.
 A problem with~\acrshort{acn:CFC} is that the supported features are differing widely between, different PLC environments.
 This requires their code generator to generate function blocks differently for different PLC environments.
-Such a restriction of course reduces portability.
+Such a restriction reduce the effectiveness and the real-world applicability significantly.
+The depedency on the capabilities of the PLC environment make it hard to use the system compared to other platform independent approaches.
 
 \subsubsection{GRAFCET}
 \label{sec:sub:grafcet}
@@ -344,7 +340,7 @@ The languages uses a similar syntax and semantic to petri nets.
 Common elements are states, state transitions with attached conditions, sub-systems in states and forks of the control flow.
 Figure~\ref{fig:grafcet} shows an example of a GRAFCET specification.
 Here the sub-systems inside a state and the control flow constructs mentioned before can be recognized.
-The full GRAFCET standard is published under the IEC 60848 standard.
+The full GRAFCET language specification is published under the IEC 60848 standard~\footnote{\url{https://webstore.iec.ch/publication/3684}}.
 \citeauthor{JULIUS20191767}~\cite{JULIUS20191767, JULIUS2017173} present a ST source code generation algorithm from GRAFCET specifications.
 In~\cite{JULIUS2017173} they present the generation algorithm but without suppling a implementation and addressing time and event constrains.
 With~\cite{JULIUS20191767} they present a Eclipse EMF based editor with an implementation of the generation algorithm.
@@ -352,4 +348,34 @@ Additionally time dependencies and events can be specified and handled.
 Their code generation algorithm ensures that the exact semantics of the GRAFCET specification are transfered to the ST code.
 For this they define a rule-based interpretation algorithm that simulates a GRAFCET execution in ST code.
 In addition to ST code, they can also generate specifications for other PLC code formats like PLCOpenXML and Structured Control Language for Siemens platforms.
-This gives their approach a wide range of target platforms.
+This gives their approach a wide range of target platforms increasing its real-world applicability.
+
+
+%% ==============================
+\subsubsection{PLCspecif}
+\label{sec:sub:plfspecif}
+%% ==============================
+
+\citeauthor{7819191}~\cite{7819191, darvas2015syntax, darvas2015requirements, darvas2015formal, 10.1007/978-3-319-33693-0_32} define a~\acrshort{acn:dsl} for~\acrshort{acn:plc} behavior specification and system modeling called PLCSpecif.
+They created the language to allow model driven development on a PLC without having problems with validation and verification.
+Core goals were ease of use, formal verification capability and readability of the generated ST code.
+PLCSpecif uses a composition of modules to describe the behavior of the control program.
+Every module consists of three parts, input specification, core behavior specification and the output specification.
+For the core behavior there are two types of Modules, Composite Modules, where the core describes a sequence of modules, and Leaf Modules, where the core is a single mealy machine.
+To define the transitions in the mealy machine, events can be specified that are triggered when a logic formula using the input variables is evaluating true.
+This model of a control program creates a big state machine from several submodules.
+A pre-processing step is used to translate events and conditionals into transitions that use guard variables and active state variables.
+Such a pre-processing is required to ensure that the transitions run correct and no errors such as infinite loops or non-determinism are present.
+After this step, a SAT solver can verify the correctness of the  transitions by searching for directed cycles of non-event transitions or multiple transitions from one node with equivalent guards.
+They use the mealy machine structure of the system to verify some general features like the absence of dead code or deadlock / livelock freeness.
+Additionally the support the specification of module invariants that can be checked on the final composite model.
+In~\cite{10.1007/978-3-319-33693-0_32} they specify methods to transform existing PLC code to a intermediate model and compare this to a existing PLCSpecif specification.
+They do this by using model equivalence or conformity checks.
+To verify the code generated from PLCSpecify as described in~\cite{7819191} they use the same method than for legacy non generated code.
+For code generation they use, a model to model transformation.
+They transform states into variables or enums, and transitions are translated into IF-THEN blocks.
+In order to fulfill the requirement of readable generated code, the first transform into a abstract ST representation and then use simplification algorithms to reduce the complexity of the code.
+The abstract ST representation is then transformed into the actual ST code.
+This also increases portability as some ST language features are not supported on all PLC platforms.
+The correctness of the transformation is ensured as the structure that is implemented in ST is the transition graph that can be implemented directly.
+There are no advanced transformations but just a plain model to text transformation with the same basic semantics.
