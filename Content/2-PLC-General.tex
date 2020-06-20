@@ -21,7 +21,7 @@
 This section explains the basics of~\glspl{acn:plc} and their programming model.
 They are a staple of industrial automation since the mid to late 1970's.
 Major manufactures include Siemens, Rockwell Automation (Allen Bradley), Schneider Electric, Mitsubishi Electric, Omron, ABB, and General Electric~\cite{Businesswire:2016}.
-An example of a modern Siemens mid range~\acrshort{acn:plc} with a attached power supply and a I/O module is shown in figure~\ref{fig:simatic_s7}.
+Figure~\ref{fig:simatic_s7} shows an example of a modern Siemens mid range~\acrshort{acn:plc} with an attached power supply and a I/O module is shown in figure.
 
 \subsection{General}
 
@@ -29,17 +29,17 @@ An example of a modern Siemens mid range~\acrshort{acn:plc} with a attached powe
     \includegraphics[width=\textwidth]{Figures/PLC_Architecture.png}
     \caption[PLC Architecture]{
        PLC Architecture~\cite[p.~4]{BOLTON200653}.
-    The Input and output interfaces are either digital or analog electrical signals.
-    Memories are controlled by the OS on the PLC and are programmed with a external programming device.
-    Additionally PLC have a communications Interface that allows it to communicate with other controllers or devices.}
+    The input and output interfaces are either digital or analog electrical signals.
+    Memories are controlled by the OS on the PLC and are programmed with an external programming device.
+    Additionally PLC have a communications interface that allows it to communicate with other controllers or devices.}
     \label{fig:plc_architecture}
 \end{figure}
 
 A~\acrfull{acn:plc} is a controller that can be programmed via simple instructions to allow the easy processing of inputs and outputs~\cite[p.~4]{BOLTON200653}.
 Figure~\ref{fig:plc_architecture} shows the basic components of a~\acrshort{acn:plc}.
-\acrshort{acn:plc} consist of input and output interfaces as well as a CPU that executes the current program on the inputs.
+\acrshort{acn:plc}s consist of input and output interfaces as well as a CPU that executes the current program on the inputs.
 The program memory allows to change the programming of  the~\acrshort{acn:plc} without adapting any hardware components.
-Additionally the data memory can be used to persist data to create stateful and complex programs.
+Additionally the data memory can be used to persist data for creating stateful programs.
 Lastly~\acrshort{acn:plc} contain a communications interface that allows the communication with other controllers or a supervisor software.
 This can for example also be used to send sensor data to a central database or implement a self management system.
 
@@ -49,9 +49,9 @@ Additional hardware components, such as memory, processors, communication or I/O
 This allows for standardized yet individually configurable hardware setups.
 Many vendors also provide non modular single-box solutions.
 
-Another difference between a~\acrshort{acn:plc} and a regular micro-controller is the execution semantic of a program.
+Another difference between a~\acrshort{acn:plc}s and a regular micro-controller is the execution semantic of a program.
 \acrshort{acn:plc} programs are executed in repeating cycles.
-Each cycle consists of three different phases, reading of input values into the~\acrshort{acn:ram}, execution of the program and the writing of the output variables from the~\acrshort{acn:ram}~\cite[p.~75]{BOLTON200653}.
+Each cycle consists of three different phases: reading of input values into the~\acrshort{acn:ram}, execution of the program and the writing of the output variables from the~\acrshort{acn:ram}~\cite[p.~75]{BOLTON200653}.
 These cycles are executed continuously during runtime, if a cycle is finished a new one starts.
 The time it takes to execute a single cycle is called the cycle time.
 This time depends on the processing power of the hardware, and the program complexity.
@@ -61,9 +61,9 @@ This provides a deterministic behavior of the PLC and allows for real-time capab
 
 \subsection{Programming with IEC 61131-3 Languages}
 
-PLC are programmed with one of the five languages defined in the~\textit{IEC 61131-3}~\cite{Plcopen:61131-3} standard.
+\acrshort{acn:plc}s are programmed with one of the five languages defined in the~\textit{IEC 61131-3}~\cite{Plcopen:61131-3} standard.
 These languages are designed to provide a safe and well defined way of handling the inputs and outputs of the controller.
-Additionally these languages are intended to be used by an engineer rather than a experienced programmer, all of these languages have reduced complexity compared to a language like C.
+Additionally these languages are intended to be used by an automation or electrical engineer rather than a experienced programmer, all of these languages have reduced complexity compared to a language like C.
 This subsection gives more details on the two most common languages used for~\acrshort{acn:plc} programming,~\acrfull{acn:ST} and the~\acrfull{acn:LD}.
 
 In general, the languages have access to the input data read from the inputs and are expected to write output values to the outputs.
@@ -122,20 +122,22 @@ END_PROGRAM
 \acrfull{acn:ST} is one of the two textual languages defined in the~\textit{IEC 61131-3} standard.
 It follows a PASCAL like syntax, allowing for a higher level of abstraction compared to the other languages for~\acrshort{acn:plc} programming.
 
-Listing~\ref{lst:ex:st} shows an example of ST code for a~\acrshort{acn:plc}.
+Listing~\ref{lst:ex:st} shows an example of~\acrshort{acn:ST} code for a~\acrshort{acn:plc}.
 This example models a setup with two proximity sensors, to detect if a object is occupying a place on the conveyor belt, and two motors, one to drive the belt and one to activate a drill.
 You can see that~\acrshort{acn:ST} allows to handle programs similar to high level languages like C.
-The first Configuration part defines a mapping of variables to physical address, defines the cycle time and the main program.
-Additionally the~\textit{b\_Belt\_Wants\_ON} variable that is stored in the memory and is not mapped to a in-/output is defined.
+The first configuration part defines a mapping of variables to physical address, defines the cycle time and the main program.
+Additionally the~\textit{b\_Belt\_Wants\_ON} variable that is stored in the memory and not mapped to a in-/output is defined.
 The second part defines the main program.
-Here you can see, that the input and output variables can be used as usual.
+Here you can see, that the input and output variables can be used in the same way as regular variables.
 As mentioned before the initial values for the variables will be read from the physical inputs before the execution, and the values of the output variables at the end of the execution are written to the physical outputs.
 
 This shows that programming in~\acrshort{acn:ST} is very similar to programming in regular PASCAL.
-They compact structure and high-level approach allows the engineer to write advanced programs easier.
+Its compact structure and high-level approach allows the engineer to write advanced programs easier.
 \acrshort{acn:ST} supports advanced control structures like~\textit{FOR} or~\textit{WHILE} loops making it easier to implement complex algorithms compared to the other PLC languages. 
 To further manage complexity, it supports function declaration.
 This makes~\acrshort{acn:ST} the best candidate function for implementing complex functionality in a~\acrshort{acn:plc}.
+The real-time functionality is realized via the pre-defined cycle time.
+\acrshort{acn:plc} environment allow to simulate and statically analyze~\acrshort{acn:ST} code to ensure the cycle times are met.
 
 \subsubsection{Ladder Diagram}
 
@@ -147,6 +149,8 @@ Figure~\ref{fig:drill:ld} shows the same functionality implemented in~\acrshort{
 On the horizontal lines, logical blocks related to input, output or memory variables can be added to create logical functions.
 In the example the circle blocks on the right symbolize the writing to the memory and the symbols on the left are read accesses and logical operations on variables in the memory.
 
+This language is for historical importance as it was the first commonly used programming language for~\acrshort{acn:plc} programming.
+Its structure is similar to the one used for programming traditional electrical relays.
 
 \begin{figure}
 	\includegraphics[width=\textwidth]{Figures/belt_drill_ld.png}

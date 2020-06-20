@@ -10,8 +10,43 @@
 \label{sec:risks}
 %% ==============================
 
+With the primary use case of~\acrshort{acn:plc} in industrial contexts, safety and reliability of the hardware as well as the software is of the uttermost importance.
+Failures caused by a fault in the software can result in huge amounts of property damages or even injuries for human workers.
+In the case of~\acrshort{acn:plc} due to them working in a safety critical environment they have to operate as a real-time system to ensure the safe state of the system.
+In this section, I investigate the risks associated with the automated program generation for~\acrshort{acn:plc}.
+I do not go into detail on safety features and functions as they are a design constraint.
+For this section I assume that the system was designed in a way that would keep it in a safe state for common errors as long as the software behaves like specified in the design.
+
+The main concern of the section is the risk associated with the automated programming of the~\acrshort{acn:plc}.
+I separate the risk into the transformation function correctness, described in~\ref{sec:sub:trans}, and the runtime guarantees, described in~\ref{sec:sub:rt}. 
+%% ==============================
 \subsection{Transformation Function Correctness}
+\label{sec:sub:trans}
+%% ==============================
+The transformation function is a core component when looking at high-level language base automatic programming.
+When the transformation function is not implementing the behavior of the high-level abstraction correctly to source code, all validation and verification on the design is meaningless.
+Therefore it has to be ensured that the transformation is correctly generating the source code in accordance to the model behavior.
+This indicates multiple requirements for a transformation function:
+\begin{itemize}
+	\item \textbf{Correctness} of the transformation of a given model behavior to source code running on a target platform has to be guaranteed.
+	\item \textbf{Traceability} between artifacts to allow fault tracing from the code to the model and the other way around. 
+\end{itemize}
+When both these points are addressed formally, a assessment of the risk of the method can be made.
 
-\todo[inline]{Conversion of ST Control Programs to ANSI C for Verification Purposes}
+In the previously presented approaches on automated programming from formal definitions the topic of correctness is often only briefly addressed.
+This makes it difficult to address the correctness of the system formally.
 
+Traceability is addressed more often for the previously mentioned approaches.
+
+%% ==============================
 \subsection{Runtime guarantees}
+\label{sec:sub:rt}
+%% ==============================
+Runtime guarantees are especially interesting when looking at the dynamic behavior of the system during actual operation.
+In real-time systems, it is required that the system follows a fixed behavior respecting defined deadlines.
+In~\enquote{traditional}~\acrshort{acn:plc} programming this is done by specifying the deadline for a given~\acrfull{acn:pou}.
+This deadline is then verified either via simulation or by statically checking if the operations in the~\acrshort{acn:pou} can be executed before the deadline.
+
+This approach is not helpful in case of most of the presented approaches.
+They often use custom multi PLC cycle state-machines that make it harder to predict the actual execution of a certain event.
+

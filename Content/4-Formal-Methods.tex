@@ -17,7 +17,7 @@ As~\glspl{acn:plc} are used for real-time applications, the importance of these 
 The previously described methods for programming with C offered possibilities in that regard, but they did not improve significantly compared to the IEC 61131-3 languages.
 Therefore in this section I am investigating the possibilities of using a formal specification to automatically program a PLC.
 This allows to easier validate and verify the code that developed.
-\citeauthor{Frey:2000aa}\todo{Formal methods in PLC programming} describe different approaches to verification and validation for~\acrshort{acn:plc} programming.
+\citeauthor{Frey:2000aa}~\cite{Frey:2000aa} describe different approaches to verification and validation for~\acrshort{acn:plc} programming.
 This paper also gives an overview of different methods that can be used to archive this.
 Based on this overview I investigated the two most used techniques in the following section.
 
@@ -32,7 +32,7 @@ This includes modeling process structures and the process itself rather than jus
 They also allow for simulation of the system components making evaluation and validation closer to the real-world.
 In software development, model specifications like~\acrfull{acn:uml} are common practice.
 The usage of a model can also provide a overview of the system and increase modularity.
-In subsection~\ref{sec:sub:mb} I investigate approaches using this specification type.
+Subsection~\ref{sec:sub:mb} investigates approaches using this specification type.
 
 In order to compare the different approaches, I look at four criteria that are critical for effective control program development.
 For the selection of the comparison criteria I looked at~\cite{VH:2014}.
@@ -41,13 +41,13 @@ From their criteria I selected the four most important ones:
 \begin{itemize}
 	\item \textbf{Effectiveness} describes the quality and expression strength of the programming method.
 	It is determined by the supported programming features, the modularity, the available reuse and the correctness of the model and the transformation.
-	In section~\ref{sec:risks} I investigate the correctness and the associated risks in more detail.
+	Section~\ref{sec:risks} investigates the correctness and the associated risks in more detail.
 	\item \textbf{Efficiency} is concerned with the time it takes to create, understand and interact with a model and the generated code.
 	This measure is relevant as improved efficiency over traditional programming is one of the key motivations of automated programming approaches.
 	\item \textbf{User acceptance} looks at the experience of a developer when using a programming approach.
 	Ease of use, required prior knowledge and assistance provided by the approach are key factors here.
 	\item \textbf{Real-world applicability} describes the available toolset and integration with existing platforms used in the industry.
-	The reason for this, is that methods that cannot be employed in a real-world scenario aren't of any use to a developer even if they excel at the other points.
+	The reasoning behind this is that methods that cannot be employed in a real-world scenario aren't of any use to a developer, even if they excel at other measures.
 \end{itemize}
 
 %% ==============================
@@ -64,26 +64,27 @@ Another common formalization method for non model based approaches are Petri Net
 A petri net is a bipartite directed graph, that describes a event-transition semantic.
 Originally used in mathematics, they were commonly used in the 2000s to model control systems~\cite{Frey:2000:2, Frey:2000aa}.
 I don't investigate approaches using petri nets further as they have become obsolete.
-Modern specification languages incorporate the features of petri nets but use a more user friendly and clear notation.
-Therefore I refrain from elaborating on them any further.
+Modern specification languages incorporate the features of petri nets, but use a more user friendly and clear notation.
+Therefore I refrain from elaborating them any further.
 
 %% ==============================
 \subsubsection{Linear Temporal Logic}
 \label{sec:sub:ltl}
 %% ==============================
 
-\acrfull{acn:ltl} is a modal logic that allows to specify conditions over time.
+\acrfull{acn:ltl} is a modal logic that allows to specify behavior over time~\cite{4567924}.
 This is done by extending logical operators (and, or, xor, etc.) with temporal operators that specify conditions for the future.
-Formally they operate on a sequence of states over the available variables called a Kripke structure\todo{Citation for LTL and Kripke structures.}.
+Formally they operate on a sequence of states over the available variables called a Kripke structure.
 Common temporal operators are~"\textbf{X}~\textit{A}" (Next), specifying that a formula~\textit{A} is true in the next state,~"\textit{A}~\textbf{U}~\textit{B}" (Until), specifying that~\textit{A} is true until~\textit{B} is true and~"\textbf{G}~\textit{A}", specifying~\textit{A} is true in all states.
-With these temporal operators a~\acrfull{acn:ltl} formula can specify a full state graph for different variable changes.
+With these temporal operators a~\acrshort{acn:ltl} formula can specify a full state graph for different variable changes.
 A formula is satisfied by a sequence of states~\textit{S} when its true for all states in sequence.
 If a formula is~\textit{valid}, it is satisfied for all possible sequences $ S\in 2^{AP} $ given the set of variables~\textit{AP}.
 
 In this section I will investigate two approaches to automated PLC programming that use~\acrshort{acn:ltl} to validate the specification.
 
 \citeauthor{Kuzmin:2013}~\cite{Kuzmin:2013} use~\acrshort{acn:ltl} to specify the behavior of the controller.
-They then use the formulas to validate the specification with a model checker and then automatically create a~\acrshort{acn:ST} program.
+They then use the formulas to validate the specification with a model checker.
+Following this the specification is  automatically translated into~\acrshort{acn:ST} code.
 In this approach, the variables for the~\acrshort{acn:ltl} are all input variables, output variables and state variables that are used in the PLC program.
 For specifying the behavior of the controller a~\acrfull{acn:ltl} formula defines the change of a variable given a system condition.
 To simplify this process they restrict the values of the variables to boolean and numerical values and only allow one value change per variable per PLC working cycle.
@@ -170,11 +171,11 @@ The addition of a process / environment model to the development process allows 
 This approach enables a thorougher validation and verification.
 Commonly simulations and hardware-in-the-loop tests are used to eliminate errors in the early stage of modeling.
 In addition models are often independent of the actual deployment language increasing portability and maintainability over time.
-Model-based development is a stable for designing and developing industrial products and plants.
+Model-based development is a staple for designing and developing industrial products and plants.
 
 I investigate multiple formalization approaches using model-based specifications to model and define the controller.
 They are grouped by the base modeling language used for the specification.
-In~\ref{sec:sub:uml} I look at approaches using~\acrshort{acn:uml} or~\acrlong{acn:sysml}.
+In~\ref{sec:sub:uml}, I look at approaches using~\acrshort{acn:uml} or~\acrlong{acn:sysml}.
 \ref{sec:sub:simulink} elaborates on methods using the SIMULINK modeling language.
 \ref{sec:sub:grafcet} describes a method using the standardized GRAFCET language.
 Lastly,~\ref{sec:sub:plfspecif} looks at the PLCspecif language developed at the CERN.
@@ -182,9 +183,9 @@ Lastly,~\ref{sec:sub:plfspecif} looks at the PLCspecif language developed at the
 \subsubsection{UML / SysML}
 \label{sec:sub:uml}
 
-\acrfull{acn:uml}~\cite{UML:2-5-1} is a standardize modeling language designed for software engineering.
+\acrfull{acn:uml}~\cite{UML:2-5-1} is a standardized modeling language designed for software engineering.
 It defines twelve different diagram types to cover all aspects of system design.
-The different diagrams allow other points of view / abstractions on the system.
+The different diagrams allow different abstraction levels of the system.
 For example use case diagrams are looking at the requirements and use-cases of a system, whereas a class diagram defines the classes that are used to realize a certain functionality.
 This makes UML flexible for creating a specification of an software systems in different details.
 
@@ -194,7 +195,7 @@ It supports the analysis, design, validation and verification of the specificati
 Another benefit is the departure from the software centric point of view of UML, that allows SysML to define more broad and complex topics.
 For example regarding embedded development, SysML has extended state machine diagrams allowing to specify more constraints making it more usable for defining PLC programs.
 
-In the following section, I am going to look at three approaches that use~\acrshort{acn:uml} or~\acrshort{acn:sml} to model the system.
+In the following section, I am going to look at three approaches that use~\acrshort{acn:uml} or~\acrshort{acn:sysml} to model the system.
 
 \citeauthor{WITSCH2015}~\cite{WITSCH2015, WITSCH20117866} define a subset of the~\acrshort{acn:uml} modeling language called plcML.
 This reduces the number of available diagrams to three, allowing for easier definition of PLC behavior.
@@ -241,10 +242,10 @@ They come the result that their refinements increase the usability and efficienc
 In addition they state that their method scales to larger project and more diverse teams in terms of experience.
 This gives the method a good real-world applicability.
 
-\citeauthor{6957399}~\cite{6957399} describe a automatic code generation algorithm for~\acrshort{acn:plc} from a~\acrshort{acn:sml} specification.
+\citeauthor{6957399}~\cite{6957399} describes a automatic code generation algorithm for~\acrshort{acn:plc} from a~\acrshort{acn:sml} specification.
 They use the~\acrshort{acn:sml} block diagram and the state-machine diagram to define the full system specification required for code generation.
 To express the system structure they redefine keywords from the SysML block diagram.
-This gives the method good real-world applicability with SysML being a established language that is widely used in the systems design industry.
+This gives the approach good real-world applicability with SysML being a established language that is widely used in the systems design industry.
 It also requires less additional training and development tools than developing a brand new specification method.
 They allow to define a blocks input, outputs, global variables, different classes of organizational units and safe states.
 \begin{figure}
@@ -264,7 +265,7 @@ Figure~\ref{fig:sysml:bdd} shows a block definition diagram for a engine unit.
 In this example the engine has two boolean inputs, a invariant that both inputs cannot be true, and a single boolean output.
 In addition to the blocks, a state-machine based model of the block can also be specified.
 This allows to generate a fully functional block instead of just the framework for it.
-For every state,~\acrshort{acn:ST} code can be specified that is executed when the state is entered.
+For every state,~\acrshort{acn:ST} code can be specified that is executed upon entry into the state.
 A use case for this, is to assign variable values.
 But this restricts the effectiveness of the approach slightly, as not all possibilities of behavior specification can be covered with this method.
 When a process cannot be modeled with a state machine, the specification can only generate a framework and the developer has to write the actual IEC 61131-3 code himself.
@@ -280,7 +281,7 @@ This has a significant impact on efficiency, real-world applicability and user a
 \subsubsection{Simulink}
 \label{sec:sub:simulink}
 
-Simulink is a graphical programming environment for developing, simulating and analyzing systems.
+Simulink\footnote{\url{https://de.mathworks.com/products/simulink.html}} is a graphical programming environment for developing, simulating and analyzing systems.
 It covers many system domains through a large availability of toolboxes.
 It is integrated in MathWorks MATLAB environment.
 A simulink diagram consists of blocks that are connected via signals.
@@ -288,22 +289,22 @@ The aforementioned toolboxes contain a large number of pre-defined blocks realiz
 For example the~\enquote{Discrete} library provides a discrete PID controller that can be used in a closed-feedback loop system.
 Blocks can also be nested allowing the user to create sub-blocks, introducing abstraction levels to a system specification.
 The large number of available blocks and the general architecture of the system make Simulink a very effective specification language.
-Its versatility and complexity while still being easy to use, even for designing large systems, are core to its success.
-In addition to the model definition, Simulink provides a large portfolio of verification methods.
+Its versatility and ease of use, while still being able to handle complex models, even for designing larger systems, are core to its success.
+In addition to the model definition, Simulink provides a large portfolio of verification and validation methods.
 The model can be discretely simulated to observe the systems behavior, static model analysis methods are available and generic test suits can be defined.
-This allows for a extensive model debugging before the model is even deployed to the actual production system or a prototype.
-The workflow of designing, simulating and analyzing is effective and easy to  use.
+This allows for a extensive model debugging before the model is deployed on the actual production system or a prototype.
+The workflow of designing, simulating and analyzing is effective and intuitive.
 For these reasons Simulink is commonly used in control system design and model-driven system development.
 As it is widely used, a transformation approach using Simulink has a good real-world applicability.
 
-Simulink provides a toolbox~\cite{Simulink:PLC} to encode an existing model in the IEC 61131-3 language~\acrshort{acn:ST}, called Simulink PLC coder.
+Simulink provides a toolbox\footnote{\url{https://de.mathworks.com/products/simulink-plc-coder.html}} to encode an existing model in the IEC 61131-3 language~\acrshort{acn:ST}, called \enquote{Simulink PLC Coder}.
 It can transform a simulink model with input, output and storage nodes as well as nested blocks into a valid ST code implementation that can be run on a PLC.
-For this to work, the blocks have to only use logical functions or mathematical functions.
+For this to work, the blocks have to exclusively consist of logical or mathematical functions.
 This makes the coder very effective as most of the Simulink features can be ported to a PLC without additional effort.
 Of course this also increases the user acceptance and real-world applicability of the method.
 To allow traceability between the transformed model and the Simulink model, the coder can generate a traceability report that shows where and how blocks are implemented in the generated code.
 The coder implements a set of optimization algorithms to reduce the complexity and size of the resulting ST code.
-\citeauthor{7535242}~\cite{7535242} describe a workflow using this Simulink PLC coder and the Simulink C coder to develop, verify and deploy a model created in Simulink on a PLC.
+\citeauthor{7535242}~\cite{7535242} describe a workflow using this~\enquote{Simulink PLC Coder} and the~\enquote{Simulink C Coder}\footnote{\url{https://de.mathworks.com/help/dsp/ug/generate-c-code-from-simulink-model.html}} to develop, verify and deploy a model created in Simulink on a PLC.
 In addition to the auto-generation and verification of the code in Simulink they implement a workflow using a bound model checker for C.
 This is required as Simulink does not provide a model checking algorithm for its models.
 For the verification they transform the Simulink model to C code, which is then combined with other C code that was manually created.
@@ -314,9 +315,10 @@ As this validates only model behavior, this result can be transferred to the Sim
 This allows for a deeper validation of the model than the other methods offered by Simulink.
 
 \citeauthor{6489667}~\cite{6489667} compare different code generator approaches for Simulink models to PLC code.
-Additionally they develop their own code generator that transforms Simulink to~\acrfull{acn:CFC}, which is another language that is widely supported for PLC programming.
+Additionally they develop their own code generator which transforms Simulink to~\acrfull{acn:CFC}, a non-standard language for PLC programming developed by Siemens.
 They decided to use~\acrshort{acn:CFC}, as its graphical structure does not differ from the Simulink model, which is not the case for ST based code generators.
-This increases user acceptance and efficiency as the transformed code can be read and understood easier as it is close to the model itself.
+This increases user acceptance and efficiency as the transformed code can be read and understood easier.
+The reason for this are the large semantical and syntactical similarities between Simulink Models and~\acrshort{acn:CFC}.
 Additionally this feature permits re-transformation from the~\acrshort{acn:CFC} model to a Simulink model.
 Hence, operations such as roundtrip engineering can be supported, which is more challenging with ST code.
 This provides a major improvement in real-world applicability and efficiency over the previously investigated approach.
@@ -329,7 +331,7 @@ The depedency on the capabilities of the PLC environment make it hard to use the
 \label{sec:sub:grafcet}
 
 GRAFCET is a graphical modeling language allows the discrete modeling of control systems.
-It was designed as a modeling language with the IEC 61131-3 languages as implementation languages.
+It was designed as a modeling language for the IEC 61131-3 implementation languages.
 For this reason it is a reasonable candidate for a code generation based modeling approach.
 The languages uses a similar syntax and semantic to petri nets.
 \begin{figure}
@@ -343,7 +345,7 @@ Here the sub-systems inside a state and the control flow constructs mentioned be
 The full GRAFCET language specification is published under the IEC 60848 standard~\footnote{\url{https://webstore.iec.ch/publication/3684}}.
 \citeauthor{JULIUS20191767}~\cite{JULIUS20191767, JULIUS2017173} present a ST source code generation algorithm from GRAFCET specifications.
 In~\cite{JULIUS2017173} they present the generation algorithm but without suppling a implementation and addressing time and event constrains.
-With~\cite{JULIUS20191767} they present a Eclipse EMF based editor with an implementation of the generation algorithm.
+With~\cite{JULIUS20191767} they present a Eclipse EMF based editor including an implementation of the generation algorithm.
 Additionally time dependencies and events can be specified and handled.
 Their code generation algorithm ensures that the exact semantics of the GRAFCET specification are transfered to the ST code.
 For this they define a rule-based interpretation algorithm that simulates a GRAFCET execution in ST code.
