@@ -33,10 +33,32 @@ This indicates multiple requirements for a transformation function:
 \end{itemize}
 When both these points are addressed formally, a assessment of the risk of the method can be made.
 
-In the previously presented approaches on automated programming from formal definitions the topic of correctness is often only briefly addressed.
+\paragraph{Correctness} is only briefly addressed in most of the previously presented approaches.
 This makes it difficult to address the correctness of the system formally.
+Commonly the papers only outline the transformation function and argue for the correctness for the general code.
+None of the approaches had a full proof of correctness publicly available.
+The Simulink based approach by~\citeauthor{6489667}~\cite{6489667}, the plcML and modAt4rMS approaches by~\citeauthor{WITSCH2015} and~\citeauthor{Obermeier:2015aa}, and the plcSpecif language~\cite{7819191, darvas2015syntax, darvas2015requirements, darvas2015formal, 10.1007/978-3-319-33693-0_32} provide extensive proofs of execution semantic equivalence between the generated code and the model.
+Therefore these approaches have no inert risk associated with the code generation, expect for implementation faults in actual implementations of the code generator.
+This makes them a more reasonable choice for real-world usage.
+The other approaches argue about the correctness without going into details.
+It can be assumed that in a real-world comparison these would also have a low risk of code generation errors, as the general transformation rules are sound.
+But without a detailed and in-depth proof the is no certainty.
+An exception is the approach using GRAFCET as modeling language, as the language was designed with the execution semantics of the IEC 61131-3 implementation languages in mind.
+Here the importance is in the implementation of the model in the language.
+This is addressed in the paper but no only the general transformation scheme is given.
 
-Traceability is addressed more often for the previously mentioned approaches.
+\paragraph{Traceability} is addressed more often for the previously mentioned approaches.
+All presented approaches provide traceability from the model to the code.
+This is either done by specific annotations in the source code, or by returning a report.
+In some cases, like the Simulink to~\acrshort{acn:CFC} transformation, traceability is possible from a syntactical similarity.
+Traceability from the source code to the model is a more complex problem that only few approaches support.
+Reason for this, is the complexity of the implementation language compared to the modeling language
+It requires a transformation from the source code to the formalization language.
+For arbitrary code in the implementation language this poses a significant challenge as it corresponds to a full source to source translation.
+Often this is not possible, as the model language does not support all levels of detail from the implementation language.
+Therefore backwards transformations in the presented approaches are possible for the graphical implementation languages or if the textual code is restricted to a certain structure.
+In summary, traceability between the model and source code is an important aspect to allow for risk minimization.
+It can increase the readability and reduce the time it takes to find faults, therefore effectively minimizing risks associated with the automated programming.
 
 %% ==============================
 \subsection{Runtime guarantees}
