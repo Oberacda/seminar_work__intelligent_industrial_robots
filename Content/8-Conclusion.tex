@@ -10,6 +10,36 @@
 \label{sec:conclusion}
 %% ==============================
 
-\dots
+In this seminar work I investigated multiple approaches on automated programming of~\acrlong{acn:plc}s.
+First I presented two development environments that allow programming in higher level languages that the common IEC 61131-3 languages.
 
+Secondly I looked at approaches to program~\acrshort{acn:plc}s from a high-level formal behavior description or a model of the process.
+These approaches are compared on their effectiveness, efficiency, user-acceptance and real-world applicability.
+All of the presented approaches provided good effectiveness for specifying the behavior on a higher abstraction level.
+They excel at designing larger systems with complex behaviors and provide benefits compared to the traditional PLC programming methods, especially when looking at~\acrshort{acn:LD}.
+With all of them allowing for formal verification of the defined behavior they are way less prone to faults introduced in the design and implementation phase of development.
+When looking at efficiency, the plcSpecif, Simulink and modAT4rMS approaches allowed the developer to progress significantly faster with a lower probability of errors compared to traditional programming.
+Methods, like the ones presented in~\ref{sec:sub:ltl}, on the other hand provided lower efficiency as their complex syntax makes development more time intensive.
+The approaches that used pre-existing commonly used modeling notations, like UML, SysML or Simulink, benefited from a greatly improved user-acceptance.
+They also required less additional training to be used in a effective manner.
+Real-world usability is a more complex topic to address, as not all presented approaches aimed towards becoming a standard approach for programming~\acrshort{acn:plc}s.
+Approaches like the GRAFCET,  plcSpecif and modAT4rMS based ones described development environments and implementations of the generation algorithms for real-world usage.
+The~\acrshort{acn:ltl} based approaches on the other hand, aimed more towards a theoretical method.
 
+As~\acrshort{acn:plc}s are commonly used in safety critical environments that required exact timing behavior to ensure safe operation.
+Therefore the risk associated with automated programming are addressed.
+Here I consider two major factors, the risk associated with the transformation from the model to the code and the risk associated with the runtime behavior of the system.
+The transformation function has to ensure that the behavior of the design is correctly mapped to the code.
+To ensure this, a approach has to give a extensive formulation of the transformation used.
+All of the presented approaches provided, to some extend, a proof that their transformation function is correctly mapping the specification to the code.
+Some approaches, like the plcSpecif or the modAT4rMS based approaches even provided extensive specification on the transformation, increasing the trustworthiness of their approach.
+When looking at the runtime behavior, the automated programming introduces a lot of risk to the system.
+The custom behavior of the models, that is mapped to the PLC cycles, makes it hard to give accurate predictions on the runtime behavior of the system.
+In combination with the possible size of the generated model, this introduces large problems offsetting most of the development time advantages of automated programming methods.
+
+In summary, there are a lot of methods for high-level and automated programming of~\acrlong{acn:plc}s.
+They provide considerable advantages for designing large, complex system.
+The available verification and validation methods make them less prone to faults in design and implementation.
+But where they excel at efficiency and effectiveness during the design, they have significant disadvantages when looking at the deployment and the runtime guarantees that can be given.
+They require in depth analysis on the deployment platform, offsetting a lot of the aforementioned advantages.
+Still I think that automated programming for~\acrshort{acn:plc} is a promising topic of research and with improved development toolsets for the approaches, the disadvantages can be negated almost entirely.
