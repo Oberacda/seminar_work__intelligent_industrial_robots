@@ -68,7 +68,24 @@ Runtime guarantees are especially interesting when looking at the dynamic behavi
 In real-time systems, it is required that the system follows a fixed behavior respecting defined deadlines.
 In~\enquote{traditional}~\acrshort{acn:plc} programming this is done by specifying the deadline for a given~\acrfull{acn:pou}.
 This deadline is then verified either via simulation or by statically checking if the operations in the~\acrshort{acn:pou} can be executed before the deadline.
+How the deadline behavior is verified is dependent on the~\acrshort{acn:plc} environment.
+For example in Siemens STEP7 there are methods for simulating the timing behavior of code on specific hardware setups.
+Additionally it provides monitoring options if the code runs on physical hardware.
+Therefore the runtime behavior of a automated programming approach has to be studied on a case by case bases with the exact setup that will be used during operation.
+This dependence on hardware components reduces the flexibility of the designed system, but is required to make accurate guarantees on the timing behavior.
+For regular control programs this can lead to redesigns, if during testing it becomes apparent that the current software cannot be executed in the required cycle time.
+For automatically programmed~\acrshort{acn:plc}s this is an issue.
+As the code is created from a formalization of a process or behavior, the system cannot be redesigned to reduce dynamic  runtime.
+These reductions would have to be implemented as optimizations in the code generator.
+This introduces new challenges as the generator has to ensure that the optimizations do not disturb the designed behavior.
+In all the presented approaches only then~\enquote{Simulink PLC Coder} (\ref{sec:sub:simulink}) supplied optimization methods for the generated code.
+But in this case the code generator is a commercial product, where no insights into the actual transformation code is provided.
 
-This approach is not helpful in case of most of the presented approaches.
-They often use custom multi PLC cycle state-machines that make it harder to predict the actual execution of a certain event.
+In addition to the obvious constraints originating from the automated code generation, there are other problems that are code generator specific.
+Some of the code generators use custom state machines that work over multiple~\acrshort{acn:plc} cycles.
+Therefore even if the cycle times are compliant, the actual result can appear multiple cycles later than expected.
+These are constrains that need to be taken into consideration when analyzing the runtime behavior of automatically programmed PLCs.
 
+This shows that the high-level abstraction during design of the system introduces new challenges regarding the actual deployment of the code.
+With the deterministic timing behavior of a PLC being one of its core advantages, not being able to verify it is a significant disadvantage.
+Automatic programming might speed up the development process and reduces error proneness during development, but without methods of ensuring deterministic timing behavior, they might not be feasible for most~\acrshort{acn:plc} use cases.
