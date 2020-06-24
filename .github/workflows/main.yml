@@ -27,3 +27,8 @@ jobs:
       with:
         args: -xelatex
         root_file: thesis.tex
+
+    - uses: actions/upload-artifact@v2
+      with:
+        name: seminar-thesis
+        path: thesis.pdf
