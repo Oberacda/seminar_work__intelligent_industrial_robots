@@ -84,10 +84,10 @@
 %% ---------------------------------------------------------------
 \ifKITthesis@german
 % English is also needed in German thesis for the abstract
-\usepackage[main=ngerman,english]{babel}
+\usepackage[main=ngerman,UKenglish,USenglish]{babel}
 \else
 % German is also needed in English thesis for the abstract
-\usepackage[main=english,ngerman]{babel}
+\usepackage[main=UKenglish,USenglish,ngerman]{babel}
 \fi
 
 \ifKITthesis@seminar
