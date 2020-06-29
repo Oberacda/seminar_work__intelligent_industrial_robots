@@ -20,32 +20,26 @@ In contrast to the modularity in hardware, the software running on a~\gls{acn:pl
 The common way of programming a PLC is with one of the five languages defined in the \textit{IEC 61131-3} standard~\cite{Plcopen:61131-3}.
 This standard defines two textual languages (\gls{acn:IL} and~\gls{acn:ST}), two graphical languages (\gls{acn:LD} and~\gls{acn:FBD}) and one hybrid language (\gls{acn:SFC}).
 The focus of the standard languages is, to allow electrical and automation engineers to program the~\gls{acn:plc} in a way that is close to common electrical relays.
-Reasoning behind this is to keep the~\gls{acn:plc} as close to the previously used nonprogrammable relays as possible.
-Therefore, the graphical languages are composing low level logical operations to generate outputs.
+Therefore, the graphical languages compose low level logical operations to generate outputs.
 The textual languages allow for a more high-level view on the operations, while still operating close to the basic logical operations.
 
 This makes building more complex applications on a~\gls{acn:plc} harder and reduces the flexibility of the systems to adapt from a software side.
 When~\glspl{acn:plc} and the corresponding languages were designed this level of flexibility was enough, but with the rise of Industry 4.0, more flexible and integrated automation solutions are more important than ever.
 An example would be the current development in~\gls{acn:ml} for industrial applications.
-It makes adapting automation systems to quickly react to sensor data processed by a~\gls{acn:ml} system a requirement.
+It makes rapid adaption of automation systems to use data form new~\acrshort{acn:ml} systems a requirement.
 This makes faster development without the expense of formal correctness a high priority for automation solutions.
 The developers of these automation solutions need to adapt to changes quicker and more often, with the changes requiring larger, more complex solutions.
 In common high-level languages, like C/C++ or Python, extensive libraries and high-level abstractions can reduce the time it takes to create such a piece of software, whereas with the common~\gls{acn:plc} languages this isn't the case.
 Due to the static and low-level approach to~\gls{acn:plc} programming other ways must be found to allow for quicker and more integrated development of solutions.
-
 \paragraph{Objective}
 Therefore this seminar work investigates different approaches to automated~\gls{acn:plc} programming from high level abstractions.
-I investigate the state-of-the-art on different approaches to automated~\gls{acn:plc} programming.
-For this I look at different transformations and the related risks for usage in real world scenarios.
-
+For this different state-of-the-art approaches for automated~\gls{acn:plc} programming are investigated.
+This includes looking at different transformations and the related risks for usage in real world scenarios.
 \paragraph{Method}
-There are several different approaches from the past decades to this question.
+There are several different approaches from the past decades to answer this question.
 One possible way of reducing programming time, is to allow C or C++ code to run on the~\gls{acn:plc}, allowing to make use of its high-level abstractions.
-Another possibility is to use a model or a formal description of the systems behavior to generate a program realizing this on a~\gls{acn:plc}.
-Both approaches have found usage in recent years, as they have inherent strengths and weaknesses in the context of automation.
-For this reason, I investigate both approaches to this problem.
-This allows me to give a broad overview of the current state-of-the-art for modern~\gls{acn:plc} program development.
-
+Another possibility is to use a model or a formal description of the systems behavior to generate a program realizing this on a~\gls{acn:plc}, similar to model-driven software development.
+To give a broad overview of the current state-of-the-art for modern~\gls{acn:plc} program development, both approaches are investigated.
 \paragraph{Outline}
 The following work will be structured as follows: 
 Section~\ref{sec:plc} outlines the basics of~\glspl{acn:plc} and the IEC 61131-3 languages. 
