@@ -51,11 +51,10 @@ Many vendors also provide non modular single-box solutions.
 
 Another difference between a~\acrshort{acn:plc} and a regular micro-controller is the execution semantic of a program.
 \acrshort{acn:plc} programs are executed in repeating cycles.
-Each cycle consists of three different phases: reading of input values into the~\acrshort{acn:ram}, execution of the program and writing of the output variables from the~\acrshort{acn:ram}~\cite[p.~75]{BOLTON200653}.
-These cycles are executed continuously during runtime, when a cycle is finished a new one starts.
-The duration permitted for the execution of a single cycle is called the cycle time.
-This time is manually or automatically defined  during development of the program.
-If at runtime the code can be executed in this fixed duration depends on the processing power of the hardware, and the program complexity.
+Each cycle consists of three distinct phases: reading of input values into the~\acrshort{acn:ram}, execution of the program and the writing of the output variables from the~\acrshort{acn:ram}~\cite[p.~75]{BOLTON200653}.
+These cycles are executed continuously during runtime if a cycle is finished a new one starts.
+The time it takes to execute a single cycle is called the cycle time.
+This time depends on the processing power of the hardware, and the program complexity.
 Because of this execution semantic, changes to the input during a cycle are not registered until the beginning of the next cycle, and new output values are not present until the end of the current cycle.
 Therefore, input values must be present for at least the cycle time to ensure they are read.
 This provides a deterministic behavior of the PLC and allows for real-time capability.
@@ -134,7 +133,7 @@ The second part defines the main program.
 Here you can see that the input and output variables can be used in the same way as regular variables.
 As mentioned before the initial values for the variables will be read from the physical inputs before the execution, and the values of the output variables at the end of the execution are written to the physical outputs.
 
-This shows that programming in~\acrshort{acn:ST} is very similar to programming in regular PASCAL.
+This shows that programming in~\acrshort{acn:ST} is similar to programming in regular PASCAL.
 Its compact structure and high-level approach allow the engineer to write advanced programs easier.
 \acrshort{acn:ST} supports advanced control structures like~\textit{FOR} or~\textit{WHILE} loops making it easier to implement complex algorithms compared to the other PLC languages. 
 To further manage complexity, it supports function declaration.
