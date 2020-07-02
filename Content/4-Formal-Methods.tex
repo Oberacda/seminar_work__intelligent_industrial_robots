@@ -10,28 +10,23 @@
 \label{sec:formal_methods}
 %% ==============================
 
-Two of the most important aspects when programming a~\glspl{acn:plc} are validation and verification.
+Two of the most important aspects when programming a~\acrshort{acn:plc} are validation and verification.
 Validation describes the correctness of the specification compared to the intended use and verification is the correctness of the actual code compared to the specification.
 Both aspects ensure that the system behaves as intended.
 As~\glspl{acn:plc} are used for real-time applications, the importance of these factors increases even more.
 The previously described methods for programming with C offered possibilities in that regard, but they did not improve significantly compared to the IEC 61131-3 languages.
-Therefore, in this section I am investigating the possibilities of using a formal specification to automatically program a PLC.
-This allows to easier validate and verify the code that developed.
+Therefore, in this section the possibilities of using a formal specification to automatically program a PLC are investigated.
+This allows to easier validate and verify the developed code.
 \citeauthor{Frey:2000aa}~\cite{Frey:2000aa} describe different approaches to verification and validation for~\acrshort{acn:plc} programming.
-This paper also gives an overview of different methods that can be used to archive this.
+This paper also gives an overview of different methods that can be used for achieving this.
 Based on this overview I investigated the two most used techniques in the following section.
 
 There a several approaches for creating a formal specification of a process or controller~\cite{Frey:2000aa}.
-One method is to use a non-model-based approach to specify and verify the behavior.
-This method allows for easier verification and validation as the specification and code can checked without any information about the environment or the process.
+First there are non-model-based approaches that don't require information about the environment or the process for verification.
 Approaches employing this method are described in subsection~\ref{sec:non_model}.
-
 Another approach is to use a modeling language to create a model-based specification.
-A modeling language allows the user to create a structural and behavioral specification of the system.
-This includes modeling process structures and the process itself rather than just the behavior.
+This includes modeling the process environment and the process itself rather than just the behavior.
 They also allow for simulation of the system components making evaluation and validation closer to the real-world.
-In software development, model specifications like~\acrfull{acn:uml} are widespread practice.
-The usage of a model can also provide an overview of the system and increase modularity.
 Subsection~\ref{sec:sub:mb} investigates approaches using this specification type.
 
 To compare the different approaches, I look at four criteria that are critical for effective control program development.
@@ -45,17 +40,17 @@ From their criteria I selected the four most important ones:
 	\item \textbf{Efficiency} is concerned with the time it takes to create, understand and interact with a model and the generated code.
 	This measure is relevant as improved efficiency over traditional programming is one of the key motivations of automated programming approaches.
 	\item \textbf{User acceptance} looks at the experience of a developer when using a programming approach.
-	Ease of use required prior knowledge and assistance provided by the approach are key factors here.
+	Ease of use, required prior knowledge and assistance provided by the approach are key factors here.
 	\item \textbf{Real-world applicability} describes the available toolset and integration with existing platforms used in the industry.
 	The reasoning behind this is that methods that cannot be employed in a real-world scenario aren't of any use to a developer, even if they excel at other measures.
 \end{itemize}
 
 %% ==============================
-\subsection{Non-Model Based}
+\subsection{Non-model Based}
 \label{sec:non_model}
 %% ==============================
 
-Non model based approaches don't incorporate any knowledge of the actual process but validate the system for all possible input parameters.
+Non-model based approaches don't incorporate any knowledge of the actual process but validate the system for all possible input parameters.
 This is especially interesting as it allows for a more detailed analysis that is not dependent on assumptions about the process.
 
 For non-model-based methods,I only investigate one formalization method~\acrlong{acn:ltl}, described in~\ref{sec:sub:ltl}.
@@ -63,9 +58,8 @@ For non-model-based methods,I only investigate one formalization method~\acrlong
 Another common formalization method for non-model-based approaches are Petri Nets.
 A petri net is a bipartite directed graph, that describes an event-transition semantic.
 Originally used in mathematics, they were commonly used in the 2000s to model control systems~\cite{Frey:2000:2, Frey:2000aa}.
-I don't investigate approaches using petri nets further as they have become obsolete.
 Modern specification languages incorporate the features of petri nets but use a more user friendly and clear notation.
-Therefore, I refrain from elaborating them any further.
+Therefore they are not elaborated on any further.
 
 %% ==============================
 \subsubsection{Linear Temporal Logic}
@@ -83,7 +77,7 @@ If a formula is~\textit{valid}, it is satisfied for all possible sequences $ S\i
 In this section I will investigate two approaches to automated PLC programming that use~\acrshort{acn:ltl} to validate the specification.
 
 \citeauthor{Kuzmin:2013}~\cite{Kuzmin:2013} use~\acrshort{acn:ltl} to specify the behavior of the controller.
-They then use the formulas to validate the specification with a model checker.
+They then use the formulas to verify the specification with a model checker.
 Following this the specification is  automatically translated into~\acrshort{acn:ST} code.
 In this approach, the variables for the~\acrshort{acn:ltl} are all input variables, output variables and state variables that are used in the PLC program.
 For specifying the behavior of the controller, a~\acrfull{acn:ltl} formula defines the change of a variable given a system condition.
@@ -131,9 +125,9 @@ The~\acrshort{acn:dsl} allows the engineer to specify a scenario-based behavior.
 A scenario consists of guarantees, modeling the behavior of the system in each situation, and assumptions, modeling the assumptions an engineer can make on the environment of the system.
 An example from the publication~\cite{10.1007/978-3-319-74730-9_23} for a guarantee would be~"\textit{After picking up an item, the feed arm must move to the press, release the item into the press, and finally move back to the feed belt.}" and one of the related assumptions~"\textit{After a robot arm is instructed to pick up an item, it will eventually pick up that item.}.
 These guarantees and assumptions can be specified in the~\acrfull{acn:sml}, the~\acrshort{acn:dsl} they use.
-They are defined for every controllable, output entities to define their reaction to input, uncontrollable entities.
+They are defined for every output entity to define their reaction to input entities.
 Additional keywords for flow control, liveness and safety conditions enable the engineer to give constrains to the specification.
-\begin{figure}
+\begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{./Figures/sml_press_beh.png}
 	\caption[\acrshort{acn:sml} specification example.]{Example~\acrshort{acn:sml} specification for the behavior of a press.~\cite{10.1007/978-3-319-74730-9_23}}
@@ -187,10 +181,10 @@ Lastly,~\ref{sec:sub:plfspecif} looks at the PLCspecif language developed at the
 It defines twelve different diagram types to cover all aspects of system design.
 The different diagrams allow different abstraction levels of the system.
 For example, use case diagrams are looking at the requirements and use-cases of a system, whereas a class diagram defines the classes that are used to realize a certain functionality.
-This makes UML flexible for creating a specification of a software systems in different details.
+This makes UML flexible for creating specifications for software systems in different details.
 
 As~\acrshort{acn:uml} is focused on software engineering, the~\acrfull{acn:sysml}~\cite{SysML:1-6} modeling language was created as an adapted subset of~\acrshort{acn:uml}, focused on systems engineering.
-Systems engineering focuses on the development an entire system, composed of multiple components.
+Systems engineering focuses on the development of an entire system, composed of multiple components.
 It supports the analysis, design, validation and verification of the specification.
 Another benefit is the departure from the software centric point of view of UML, that allows SysML to define more broad and complex topics.
 For example, regarding embedded development, SysML has extended state machine diagrams allowing to specify more constraints making it usable for defining PLC programs.
@@ -202,6 +196,7 @@ This reduces the number of available diagrams to three, allowing for easier defi
 They use class diagrams for structural modeling and for behavioral modeling, adapted activity and state-machine diagrams.
 In addition to this, they provide a code generator for IEC 61131-3 languages.
 \citeauthor{Obermeier:2015aa}~\cite{Obermeier:2015aa} refine this plcML approach to increase usability and performance.
+The refined version is called~\acrfull{acn:mod4}.
 They use features from~\acrshort{acn:uml},~\acrshort{acn:sysml} and plcML.
 A goal of their approach is to facilitate reuse and increase the usability of the language.
 Through a study~\cite{6315074} they concluded that the plcML approach was too complex to use and required a lot of specialized training to be more effective than traditional coding with the IEC 61131-3 languages.
@@ -238,7 +233,7 @@ Additionally, the definition of the structure and behavior of a system can be tr
 This increases efficiency and reduces the number of errors while moving from the model to the code.
 The transformation is described in detail in~\cite{WITSCH2015}.
 \citeauthor{Obermeier:2015aa} conducted a study to investigate the impact the refinements have on user acceptance and efficiency.
-They come the result that their refinements increase the usability and efficiency during development significantly compared to the pure plcML specification and slightly compared to the basic IEC 61131-3 languages.
+They conclude that their refinements increase the usability and efficiency during development significantly compared to the pure plcML specification and slightly compared to the basic IEC 61131-3 languages.
 In addition, they state that their method scales to larger project and more diverse teams in terms of experience.
 This gives the method a good real-world applicability.
 
@@ -248,7 +243,7 @@ To express the system structure, they redefine keywords from the SysML block dia
 This gives the approach good real-world applicability with SysML being an established language that is widely used in the systems design industry.
 It also requires less additional training and development tools than developing a brand-new specification method.
 They allow to define a blocks input, outputs, global variables, different classes of organizational units and safe states.
-\begin{figure}
+\begin{figure}[h]
 	\begin{subfigure}{0.5\textwidth}
 		\includegraphics[width=\textwidth]{./Figures/sysml_bdd.png}
 		\caption{Block description diagram for a engine unit.}
@@ -270,7 +265,7 @@ A use case for this, is to assign variable values.
 But this restricts the effectiveness of the approach slightly, as not all possibilities of behavior specification can be covered with this method.
 When a process cannot be modeled with a state machine, the specification can only generate a framework and the developer must write the actual IEC 61131-3 code himself.
 Figure~\ref{fig:sysml:stm} shows the state machine definition for a pump module.
-The pump has the same block definition diagram than the engine shown in~\ref{fig:sysml:bdd}.
+The pump has the same block definition diagram then the engine shown in~\ref{fig:sysml:bdd}.
 In the comment elements attached to the states, the ST code to run on state entry is defined.
 They implement a template-based code generator that uses the previously specified models and generates a~\acrshort{acn:ST} code implementation of the model.
 For this the model is converted into a series of ordered operations that must be executed in a PLC cycle.
@@ -316,9 +311,9 @@ This allows for a deeper validation of the model than the other methods offered 
 
 \citeauthor{6489667}~\cite{6489667} compare different code generator approaches for Simulink models to PLC code.
 Additionally, they develop their own code generator which transforms Simulink to~\acrfull{acn:CFC}, a non-standard language for PLC programming developed by Siemens.
-They decided to use~\acrshort{acn:CFC}, as its graphical structure does not differ from the Simulink model, which is not the case for ST based code generators.
+They decided to use~\acrshort{acn:CFC}, as its graphical structure is close to the one used for Simulink models.
+For ST based code generators this is not the case.
 This increases user acceptance and efficiency as the transformed code can be read and understood easier.
-The reason for this is the large semantical and syntactical similarities between Simulink Models and~\acrshort{acn:CFC}.
 Additionally, this feature permits re-transformation from the~\acrshort{acn:CFC} model to a Simulink model.
 Hence, operations such as roundtrip engineering can be supported, which is more challenging with ST code.
 This provides a major improvement in real-world applicability and efficiency over the previously investigated approach.
@@ -370,7 +365,7 @@ A pre-processing step is used to translate events and conditionals into transiti
 Such a pre-processing is required to ensure that the transitions run correct and no errors such as infinite loops or non-determinism are present.
 After this step, a SAT solver can verify the correctness of the  transitions by searching for directed cycles of non-event transitions or multiple transitions from one node with equivalent guards.
 They use the mealy machine structure of the system to verify some general features like the absence of dead code or deadlock / livelock freeness.
-Additionally, the support the specification of module invariants that can be checked on the final composite model.
+Additionally, they support the specification of module invariants that can be checked on the final composite model.
 In~\cite{10.1007/978-3-319-33693-0_32} they specify methods to transform existing PLC code to an intermediate model and compare this to an existing PLCSpecif specification.
 They do this by using model equivalence or conformity checks.
 To verify the code generated from PLCSpecif as described in~\cite{7819191} they use the same method than for legacy non generated code.
