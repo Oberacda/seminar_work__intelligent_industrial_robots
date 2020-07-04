@@ -156,7 +156,6 @@ This code generation scheme is beneficial for the efficiency and real-world usab
 With traceability and maintainability being key factors in industrial applications, this is an important feature.
 The authors state that this transformation is valid by design.
 
-
 \subsection{Model Based}
 \label{sec:sub:mb}
 
@@ -205,7 +204,7 @@ First it requires a structural definition, for the different components that are
 They are defined as modules with attributes, methods and inheritance.
 An example would be a cylinder module~\cite{Obermeier:2015aa} consisting of an actuator for managing the cylinder position and a pressure sensor.
 Figure~\ref{fig:modAT_struct} shows this example as it was used in~\cite{Obermeier:2015aa}.
-\begin{figure}
+\begin{figure}[h]
 	\begin{subfigure}{\textwidth}
 		\includegraphics[width=\textwidth]{./Figures/modAT4rMS_struct.png}
 		\caption{Structural definition of the press setup.}
@@ -329,7 +328,7 @@ GRAFCET is a graphical modeling language allows the discrete modeling of control
 It was designed as a modeling language for the IEC 61131-3 implementation languages.
 For this reason, it is a reasonable candidate for a code generation-based modeling approach.
 The language uses a similar syntax and semantic to petri nets.
-\begin{figure}
+\begin{figure}[h]
 	\includegraphics[width=\textwidth]{./Figures/grafcet_ex.jpg}
 	\caption[Example of a GRAFCET specification.]{Example of a GRAFCET specification.~\cite{JULIUS2017173}}
 	\label{fig:grafcet}
