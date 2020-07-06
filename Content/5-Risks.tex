@@ -10,21 +10,21 @@
 \label{sec:risks}
 %% ==============================
 
-With the primary use case of~\acrshort{acn:plc} in industrial contexts, safety and reliability of the hardware as well as the software is of the uttermost importance.
+With the primary use case of~\acrshort{acn:plc} in industrial contexts, safety and reliability of the hardware, as well as the software, is of the uttermost importance.
 Failures caused by a fault in the software can result in vast amounts of property damages or even injuries for human workers.
 In the case of~\acrshort{acn:plc} due to them working in a safety critical environment they must operate as a real-time system to ensure the safe state of the system.
-In this section, I investigate the risks associated with the automated program generation for~\acrshort{acn:plc}.
-I do not go into detail on safety features and functions as they are a design constraint.
-For this section I assume that the system was designed in a way that would keep it in a safe state for common errors if the software behaves like specified in the design.
+This section investigates the risks associated with the automated program generation for~\acrshort{acn:plc}.
+Details on safety features and functions are omitted, as they are a design constraint.
+It is assumed that the system was designed in a way that would keep it in a safe state for common errors if the implementation behaves like specified in the design.
 
 The main concern of the section is the risk associated with the automated programming of the~\acrshort{acn:plc}.
-I separate the risk into the transformation function correctness, described in~\ref{sec:sub:trans}, and the runtime guarantees, described in~\ref{sec:sub:rt}. 
+The risk analysis is separated into the transformation function correctness, described in~\ref{sec:sub:trans}, and the runtime guarantees, described in~\ref{sec:sub:rt}. 
 %% ==============================
 \subsection{Transformation Function Correctness}
 \label{sec:sub:trans}
 %% ==============================
-The transformation function is a core component when looking at high-level language base automatic programming.
-When the transformation function is not implementing the behavior of the high-level abstraction correctly to source code, all validation and verification on the design is meaningless.
+The transformation function is a core component of high-level language based automatic programming.
+When the transformation function is not implementing the behavior of the high-level abstraction correctly in the target source code, all verification on the high-level abstraction is meaningless.
 Therefore, it must be ensured that the transformation is correctly generating the source code in accordance to the model behavior.
 This indicates multiple requirements for a transformation function:
 \begin{itemize}
@@ -35,9 +35,9 @@ When both these points are addressed formally, an assessment of the risk of the 
 
 \paragraph{Correctness} is only briefly addressed in most of the previously presented approaches.
 This makes it difficult to address the correctness of the system formally.
-Commonly the papers only outline the transformation function and argue for the correctness for the general code.
+Commonly papers only outline the transformation function and argue on the correctness for the general code.
 None of the approaches had a full proof of correctness publicly available.
-The Simulink based approach by~\citeauthor{6489667}~\cite{6489667}, the plcML and modAt4rMS approaches by~\citeauthor{WITSCH2015} and~\citeauthor{Obermeier:2015aa}, and the PLCspecif language~\cite{7819191, darvas2015syntax, darvas2015requirements, darvas2015formal, 10.1007/978-3-319-33693-0_32} provide extensive proofs of execution semantic equivalence between the generated code and the model.
+The Simulink based approach by~\citeauthor{6489667}~\cite{6489667}, the plcML and~\acrshort{acn:mod4} approaches by~\citeauthor{WITSCH2015} and~\citeauthor{Obermeier:2015aa}, and the PLCspecif language~\cite{7819191, darvas2015syntax, darvas2015requirements, darvas2015formal, 10.1007/978-3-319-33693-0_32} provide extensive proofs of execution semantic equivalence between the generated code and the model.
 Therefore, these approaches have no inert risk associated with the code generation, expect for implementation faults in actual implementations of the code generator.
 This makes them a more reasonable choice for real-world usage.
 The other approaches argue about the correctness without going into details.
@@ -47,7 +47,7 @@ An exception is the approach using GRAFCET as modeling language, as the language
 Here the importance is in the implementation of the model in the language.
 This is addressed in the paper but only the general transformation scheme is given.
 
-\paragraph{Traceability} is addressed more often for the previously mentioned approaches.
+\paragraph{Traceability} is addressed commonly in the previously mentioned approaches.
 All presented approaches provide traceability from the model to the code.
 This is either done by specific annotations in the source code, or by returning a report.
 In some cases, like the Simulink to~\acrshort{acn:CFC} transformation, traceability is possible from a syntactical similarity.
