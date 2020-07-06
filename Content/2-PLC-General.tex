@@ -76,28 +76,6 @@ They also have access to the memory allowing to read data from previous cycles o
 \lstset{language=Pascal}
 \begin{lstlisting}[caption={
 Example of~\gls{acn:ST} code for controlling a conveyor belt and a drill.},label=lst:ex:st]
-// PLC configuration
-CONFIGURATION DefaultCfg
-	VAR_GLOBAL
-		b_Belt_Wants_ON  : BOOL;
-
-		// Digital input of the PLC (Address 0.0).
-		Position_A_Free     AT %IX0.0:BOOL;
-		// Digital input of the PLC (Address 0.1).
-		Position_B_Free     AT %IX0.1:BOOL;
-
-		// Digital output of the PLC (Address 0.0). (Coil)
-		Drill_ON            AT %QX0.0:BOOL;
-		// Digital output of the PLC (Address 0.1). (Coil)
-		Belt_ON             AT %QX0.1:BOOL;
-	END_VAR
-
-	// Schedule the main program to be executed every 20 ms
-	TASK Tick(INTERVAL := t#20ms);
-
-	PROGRAM Main WITH Tick : Drill_Belt_Control;
-END_CONFIGURATION
-
 // Actual Program
 PROGRAM Drill_Belt_Control          
 	VAR_EXTERNAL
