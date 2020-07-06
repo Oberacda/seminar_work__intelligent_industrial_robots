@@ -48,13 +48,13 @@ From their criteria I selected the four most important ones:
 %% ==============================
 
 Non-model based approaches don't incorporate any knowledge of the actual process but validate the system for all possible input parameters.
-This is especially interesting as it allows for a analysis that is not dependent on assumptions about the process or its environment.
+This is especially interesting as it allows for an analysis that is not dependent on assumptions about the process or its environment.
 
 A historically common formalization method for non-model-based approaches are Petri Nets.
 A petri net is a bipartite directed graph, that describes an event-transition semantic.
 Originally used in mathematics, they were commonly used in the 2000s to model control systems~\cite{Frey:2000:2, Frey:2000aa}.
 Modern specification languages incorporate the features of petri nets but use a more user friendly and clear notation.
-Therefore they are not elaborated on any further.
+Therefore, they are not elaborated on any further.
 
 %% ==============================
 \subsubsection{Linear Temporal Logic}
@@ -123,7 +123,7 @@ Such a specification allows for great effectiveness, as most controller scenario
 The distinct roles and guarantees ease the use of specifying behavior, which allows for better ease of use and efficiency.
 They provide an Eclipse based tool named ScenarioTools to create these specifications.
 This greatly increases the actual real-world applicability of the approach, as well as the user acceptance due to increased usability and support during development.
-For verification and generation they first transform the specification into a game graph.
+For verification and generation, they first transform the specification into a game graph.
 This can be used to create a General Reactivity 1 problem instance, where LTL formula with the form
 \begin{equation}
 \left(\land_{i}\square\diamond a_{i} \right) \rightarrow \left(\land_{i}\square\diamond g_{i} \right)
@@ -177,7 +177,7 @@ In addition to this, they provide a code generator for IEC 61131-3 languages.
 The refined version is called~\acrfull{acn:mod4}.
 They use features from~\acrshort{acn:uml},~\acrshort{acn:sysml} and plcML.
 A goal of their approach is to facilitate reuse and increase the usability of the modeling language.
-Through a study~\cite{6315074} they concluded that the plcML approach was too complex and required a lot of specialized training in order to be more effective than the IEC 61131-3 languages.
+Through a study~\cite{6315074} they concluded that the plcML approach was too complex and required a lot of specialized training to be more effective than the IEC 61131-3 languages.
 They keep the basic structure of the diagrams defined in plcML but redesign the concrete formulation.
 The specification is split into a structural and behavioral specification.
 Figure~\ref{fig:modAT_struct} shows an example of~\acrshort{acn:mod4} structural definition as it was used in~\cite{Obermeier:2015aa}.
