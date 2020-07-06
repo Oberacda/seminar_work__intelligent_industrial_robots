@@ -50,9 +50,7 @@ From their criteria I selected the four most important ones:
 Non-model based approaches don't incorporate any knowledge of the actual process but validate the system for all possible input parameters.
 This is especially interesting as it allows for a analysis that is not dependent on assumptions about the process or its environment.
 
-For non-model-based methods only oneformalization method~\acrlong{acn:ltl}, described in~\ref{sec:sub:ltl}, is investigated.
-
-Another common formalization method for non-model-based approaches are Petri Nets.
+A historically common formalization method for non-model-based approaches are Petri Nets.
 A petri net is a bipartite directed graph, that describes an event-transition semantic.
 Originally used in mathematics, they were commonly used in the 2000s to model control systems~\cite{Frey:2000:2, Frey:2000aa}.
 Modern specification languages incorporate the features of petri nets but use a more user friendly and clear notation.
@@ -73,7 +71,6 @@ This section investigates two approaches to automated PLC programming that use~\
 \citeauthor{Kuzmin:2013}~\cite{Kuzmin:2013} use~\acrshort{acn:ltl} to specify the behavior of the controller.
 They then use the formulas to verify the specification with a model checker.
 Following this the specification is  automatically translated into~\acrshort{acn:ST} code.
-In this approach, the variables for the~\acrshort{acn:ltl} are all input variables, output variables and state variables that are used in the PLC program.
 For specifying the behavior of the controller, a~\acrfull{acn:ltl} formula defines the change of a variable given a system condition.
 To simplify this process, they restrict the values of the variables to Boolean and numerical values and only allow one value change per variable, per PLC working cycle.
 \begin{equation}
@@ -96,26 +93,25 @@ ELSIF OldVarCond' AND FiringCond' THEN
     V := NewValExpr'; (*V-*)
 END_IF
 \end{lstlisting}
-Listing~\ref{lst:ltl:st} shows the~\acrshort{acn:ST} code for the equations~\ref{eq:increase} and~\ref{eq:decrease}.
-As the specifications are complex formulas the efficiency of the specification is reduced significantly.
+Listing~\ref{lst:ltl:st} shows the~\acrshort{acn:ST} code for equations~\ref{eq:increase} and~\ref{eq:decrease}.
+As the specifications are complex formulas the efficiency of the method is reduced significantly.
 The complex nature makes intensive training and knowledge in modal logic necessary.
 This has an adverse impact on the user acceptance and real-world applicability as the specifications are too complex and error prone.
-Additionally, they propose a transformation to model checker code that allows to verify the integrity of the model.
+In addition, they propose a transformation to model checker code that allows to verify the integrity of the model.
 This is done by finding a sequence of inputs where one of the LTL formula is not satisfied.
-If such a sequence is found, it shows that not all LTL formula a valid, which suggests that the specification is incomplete.
+If such a sequence is found it shows that the specification is incomplete.
 If the LTL formulas are valid, there is no possible state of variables where the program is not acting as specified.
 With this method, the verification of the control program is easier as it can be done directly from the specification.
 In combination with the substantial number of available constructs in~\acrshort{acn:ltl} formula, this provides a considerable effectiveness.
 The only thing missing due to formula-based specification are objects or instances.
-Their behavior can be emulated but this requires complex formula constructs.
-But the authors don't provide a formal verification of the transformation and argue with the \enquote{obvious correctness} of the transformation.
+The authors don't provide a formal verification of the transformation and argue with the \enquote{obvious correctness} of the transformation.
 
 The second approach by~\citeauthor{10.1007/978-3-319-74730-9_23}~\cite{10.1007/978-3-319-74730-9_23} uses a~\acrfull{acn:dsl} to describe the control program.
-This~\acrshort{acn:dsl} is then verified by transforming it into an~\acrshort{acn:ltl} formula and using a model checker.
+This~\acrshort{acn:dsl} is then verified by transformation it into an~\acrshort{acn:ltl} formula and the subsequent use of a model checker.
 The actual~\acrshort{acn:plc} code is created by transforming the~\acrshort{acn:dsl} into a~\acrshort{acn:ST} control program.
 They use an event \& response semantic for execution so that the system uses controlled transitions to react to unpredictable environment changes.
 A reaction to an event consists of guarantees, modeling the behavior of the system to the event, and assumptions, modeling the prerequisites before and after the reaction.
-An example from the publication~\cite{10.1007/978-3-319-74730-9_23} for a guarantee would be~"\textit{After picking up an item, the feed arm must move to the press, release the item into the press, and finally move back to the feed belt.}" and one of the related assumptions~"\textit{After a robot arm is instructed to pick up an item, it will eventually pick up that item.}.
+An example from the publication~\cite{10.1007/978-3-319-74730-9_23} for a guarantee would be~"\textit{After picking up an item, the feed arm must move to the press, release the item into the press, and finally move back to the feed belt.}" and one of the related assumptions~"\textit{After a robot arm is instructed to pick up an item, it will eventually pick up that items}.
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{./Figures/sml_press_beh.png}
@@ -127,7 +123,7 @@ Such a specification allows for great effectiveness, as most controller scenario
 The distinct roles and guarantees ease the use of specifying behavior, which allows for better ease of use and efficiency.
 They provide an Eclipse based tool named ScenarioTools to create these specifications.
 This greatly increases the actual real-world applicability of the approach, as well as the user acceptance due to increased usability and support during development.
-The specification is transformed into a game graph, where nodes are the currently active events and the edges are either controllable or uncontrollable input events.
+For verification and generation they first transform the specification into a game graph.
 This can be used to create a General Reactivity 1 problem instance, where LTL formula with the form
 \begin{equation}
 \left(\land_{i}\square\diamond a_{i} \right) \rightarrow \left(\land_{i}\square\diamond g_{i} \right)
@@ -148,8 +144,8 @@ The authors state that this transformation is valid by design.
 %===========================
 Model based approaches use a specification of the controller and a model of the process.
 The addition of a process / environment model to the development process allows for easier communication and more specific design.
-This approach enables a thorough verification and ease validation.
-Commonly simulations and hardware-in-the-loop tests are used to eliminate errors in the early stage of modeling.
+This approach enables a thorough verification and easier validation.
+Commonly, simulations and hardware-in-the-loop tests are used to eliminate errors in the early stage of modeling.
 In addition, models are often independent of the actual deployment language increasing portability and maintainability over time.
 Model-based development is a staple for designing and developing industrial products and plants.
 
@@ -181,7 +177,7 @@ In addition to this, they provide a code generator for IEC 61131-3 languages.
 The refined version is called~\acrfull{acn:mod4}.
 They use features from~\acrshort{acn:uml},~\acrshort{acn:sysml} and plcML.
 A goal of their approach is to facilitate reuse and increase the usability of the modeling language.
-Through a study~\cite{6315074} they concluded that the plcML approach was too complex and required a lot of specialized training in order to be more effective than traditional coding with the IEC 61131-3 languages.
+Through a study~\cite{6315074} they concluded that the plcML approach was too complex and required a lot of specialized training in order to be more effective than the IEC 61131-3 languages.
 They keep the basic structure of the diagrams defined in plcML but redesign the concrete formulation.
 The specification is split into a structural and behavioral specification.
 Figure~\ref{fig:modAT_struct} shows an example of~\acrshort{acn:mod4} structural definition as it was used in~\cite{Obermeier:2015aa}.
@@ -216,8 +212,7 @@ They use the~\acrshort{acn:sml} block diagram and the state-machine diagram to d
 To express the system structure, they redefine keywords from the SysML block diagram.
 This gives the approach good real-world applicability with SysML being an established language that is widely used in the systems design industry.
 It also requires less additional training and development tools than developing a brand-new specification method.
-They allow to define a blocks input, outputs, global variables, different classes of organizational units and safe states.
-\begin{figure}[H]
+\begin{figure}[h]
 	\begin{subfigure}{0.5\textwidth}
 		\includegraphics[width=\textwidth]{./Figures/sysml_bdd.png}
 		\caption{Block description diagram for an engine unit.}
@@ -239,7 +234,7 @@ Figure~\ref{fig:sysml:stm} shows the state machine definition for a pump module.
 They implement a template-based code generator that uses the previously specified models and generates a~\acrshort{acn:ST} code implementation of the model.
 Every operation derived from a state in the state machines and the block definitions is then mapped to ST code.
 This procedure has the benefit of allowing round trip engineering as the generated code can be altered and re-transformed into the model if the edits don't alter the fundamental structure.
-This has a significant impact on efficiency, real-world applicability and user acceptance as the development times can be reduced and its easier for a developer to work with the code as well as the model.
+This has a significant impact on efficiency, real-world applicability and user acceptance as the development times can be reduced and its easier for a developer to work with the code, as well as the model.
 %===========================
 \subsubsection{Simulink}
 \label{sec:sub:simulink}
@@ -249,32 +244,28 @@ It covers many system domains through a large availability of toolboxes.
 It is integrated in MathWorks MATLAB environment.
 A Simulink diagram consists of blocks that are connected via signals.
 The toolboxes contain many pre-defined blocks realizing a common behavior for a specific domain.
-For example, the~\enquote{Discrete} library provides a discrete PID controller that can be used in a closed-feedback loop system.
+For example, the~\enquote{\textit{Discrete}} library provides a discrete PID controller that can be used in a closed-feedback loop system.
 The considerable number of available blocks and the general architecture of the system make Simulink a highly effective specification language.
-In addition to the model definition, Simulink provides a large portfolio of verification and validation methods.
+Additionally, Simulink provides a large portfolio of verification and validation methods.
 The model can be discretely simulated to observe the systems behavior, static model analysis methods are available and generic test suits can be defined.
 The workflow of designing, simulating and analyzing is effective and intuitive.
 As it is widely used, a transformation approach using Simulink has a good real-world applicability.
 
-Simulink provides a toolbox\footnote{\url{https://de.mathworks.com/products/simulink-plc-coder.html}} to encode an existing model in the IEC 61131-3 language~\acrshort{acn:ST}, called \enquote{Simulink PLC Coder}.
-It can transform a Simulink model with input, output and storage nodes as well as nested blocks into a valid ST code implementation that can be run on a PLC.
+Simulink provides a toolbox\footnote{\url{https://de.mathworks.com/products/simulink-plc-coder.html}} to encode an existing model in the IEC 61131-3 language~\acrshort{acn:ST}, called \enquote{\textit{Simulink PLC Coder}}.
+It can transform a Simulink model with input, output and storage nodes as well as nested blocks into runnable ST code.
 For this to work, the blocks must exclusively consist of logical or mathematical functions.
 This makes the coder remarkably effective as most of the Simulink features can be ported to a PLC without additional effort.
-Of course, this also increases the user acceptance and real-world applicability of the method.
+The simplicity also increases the user acceptance and real-world applicability of the method.
 \citeauthor{7535242}~\cite{7535242} describe a workflow using this~\enquote{Simulink PLC Coder} and the~\enquote{Simulink C Coder}\footnote{\url{https://de.mathworks.com/help/dsp/ug/generate-c-code-from-simulink-model.html}} to develop, verify and deploy a model created in Simulink on a PLC.
-In addition to the auto-generation and verification of the code in Simulink they implement a workflow using a bound model checker for C.
-This is required as Simulink does not provide a model checking algorithm for its models.
-For the verification they transform the Simulink model to C code, which is then combined with other C code that was manually created.
-This manually created C code, contains the assertions, invariants and model parameters in a format that is accessible for the model checker.
-They then feed the C files in the~\acrfull{acn:cbmc}.
+As an addition to the Simulink based workflow, they propose using a C-based model checker for verification.
+For verification, they transform the Simulink model to C code, which is combined with manually written C code.
+The manually created C code, contains the assertions, invariants and model parameters in a format conform to the~\acrfull{acn:cbmc}.
 The checker runs the model and verifies the defined model invariants and parameters.
 This allows for a deeper validation of the model than the other methods offered by Simulink.
 
 \citeauthor{6489667}~\cite{6489667} compare different code generator approaches for Simulink models to PLC code.
 Additionally, they develop their own code generator which transforms Simulink to~\acrfull{acn:CFC}, a non-standard language for PLC programming developed by Siemens.
-They decided to use~\acrshort{acn:CFC}, as its graphical structure is close to the one used for Simulink models.
-For ST based code generators this is not the case.
-This increases user acceptance and efficiency as the transformed code can be read and understood easier.
+The similarities in syntax and semantic between~\acrshort{acn:CFC} and Simulink increases user acceptance and efficiency, as the transformed code can be read and understood easier.
 Additionally, this feature permits re-transformation from the~\acrshort{acn:CFC} model to a Simulink model.
 Hence, operations such as roundtrip engineering can be supported, which is more challenging with ST code.
 This provides a major improvement in real-world applicability and efficiency over the previously investigated approach.
@@ -288,19 +279,17 @@ The dependency on the capabilities of the PLC environment make it hard to use th
 
 GRAFCET is a graphical modeling language allows the discrete modeling of control systems.
 It was designed as a modeling language for the IEC 61131-3 implementation languages.
-For this reason, it is a reasonable candidate for a code generation-based modeling approach.
+Therefore, it is a reasonable candidate for a code generation-based modeling approach.
 The language uses a similar syntax and semantic to petri nets.
 \begin{figure}[h]
 	\includegraphics[width=\textwidth]{./Figures/grafcet_ex.jpg}
 	\caption[Example of a GRAFCET specification.]{Example of a GRAFCET specification.~\cite{JULIUS2017173}}
 	\label{fig:grafcet}
 \end{figure}
-Common elements are states, state transitions with attached conditions, sub-systems in states and forks of the control flow.
 Figure~\ref{fig:grafcet} shows an example of a GRAFCET specification.
 The full GRAFCET language specification is published under the IEC 60848 standard~\footnote{\url{https://webstore.iec.ch/publication/3684}}.
 \citeauthor{JULIUS20191767}~\cite{JULIUS20191767, JULIUS2017173} present a ST source code generation algorithm from GRAFCET specifications.
-In~\cite{JULIUS2017173} they present the generation algorithm but without supplying an implementation and addressing time and event constrains.
-With~\cite{JULIUS20191767} they present an Eclipse EMF based editor including an implementation of the generation algorithm.
+They present a generation algorithm~\cite{JULIUS2017173} and an Eclipse EMF based editor~\cite{JULIUS20191767} including an implementation of the generation algorithm.
 Additionally, time dependencies and events can be specified and handled.
 Their code generation algorithm ensures that the exact semantics of the GRAFCET specification are transferred to the ST code.
 For this they define a rule-based interpretation algorithm that simulates a GRAFCET execution in ST code.
@@ -314,17 +303,15 @@ This gives their approach a wide range of target platforms increasing its real-w
 %% ==============================
 
 \citeauthor{7819191}~\cite{7819191, darvas2015syntax, darvas2015requirements, darvas2015formal, 10.1007/978-3-319-33693-0_32} define a~\acrshort{acn:dsl} for~\acrshort{acn:plc} behavior specification and system modeling called PLCSpecif.
-They created the language to allow model driven development on a PLC without having problems with validation and verification.
+They created the language to allow model driven development on a~\acrshort{acn:plc} with extended capabilities for validation and verification.
 Core goals were ease of use, formal verification capability and readability of the generated ST code.
 PLCSpecif uses a composition of modules to describe the behavior of the control program.
 A SAT solver can verify the correctness of transitions in a module by searching for directed cycles of non-event transitions or multiple transitions from one node with equivalent guards.
-They use the mealy machine structure of the system to verify some general features like the absence of dead code or deadlock / livelock freeness.
+This allows to verify some general features like the absence of dead code or deadlock / livelock freeness.
 Additionally, they support the specification of module invariants that can be checked on the final composite model.
 In~\cite{10.1007/978-3-319-33693-0_32} they specify methods to transform existing PLC code to an intermediate model and compare this to an existing PLCSpecif specification.
-They do this by using model equivalence or conformity checks.
-To verify the code generated from PLCSpecif as described in~\cite{7819191} they use the same method than for legacy non generated code.
+To verify the code generated from PLCSpecif as described in~\cite{7819191} they use the same method.
 For code generation they use, a model to model transformation.
-They transform states into variables or enums, and transitions are translated into IF-THEN blocks.
 To fulfill the requirement of readable generated code, the first transform into an abstract ST representation and then use simplification algorithms to reduce the complexity of the code.
 The abstract ST representation is then transformed into the actual ST code.
 This also increases portability as some ST language features are not supported on all PLC platforms.
