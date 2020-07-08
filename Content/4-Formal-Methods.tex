@@ -182,21 +182,24 @@ They keep the basic structure of the diagrams defined in plcML but redesign the 
 The specification is split into a structural and behavioral specification.
 Figure~\ref{fig:modAT_struct} shows an example of~\acrshort{acn:mod4} structural definition as it was used in~\cite{Obermeier:2015aa}.
 \begin{figure}[h]
-	\centering
-	\includegraphics[width=0.7\textwidth]{./Figures/modAT4rMS_struct.png}
-	\caption[Example of a modAT4rMS structural specification for a two-cylinder press setup.]{Example of a modAT4rMS structuralspecification for a two-cylinder press setup.~\cite{Obermeier:2015aa}}
-	\label{fig:modAT_struct}
+	\begin{subfigure}{0.5\textwidth}
+		\centering
+		\includegraphics[width=\textwidth]{./Figures/modAT4rMS_struct.png}
+		\caption{modAT4rMS structural specification.}
+		\label{fig:modAT_struct}
+	\end{subfigure}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=\textwidth]{./Figures/modAT4rMS_beh.png}
+		\caption{modAT4rMS behavior specification.}
+		\label{fig:modAT_beh}
+	\end{subfigure}
+	\caption[Example of a modAT4rMS specification for a two-cylinder press setup.]{Example of a modAT4rMS specification for a two-cylinder press setup.~\cite{Obermeier:2015aa}}
 \end{figure}
 This structural definition uses adapted~\acrshort{acn:uml} class diagrams defined for plcML.
 Secondly, the behavior of the components must be defined.
 For this they use activity and state-charts that must be defined for every module.
 In a behavior definition for a module, the functions and attributes defined in the structure diagram are used.
 In figure~\ref{fig:modAT_beh} an example of the behavior specification for the stamp press defined in~\ref{fig:modAT_struct} is shown.
-\begin{figure}[h]
-	\includegraphics[width=\textwidth]{./Figures/modAT4rMS_beh.png}
-	\caption[Example of a modAT4rMS behavior specification for a two-cylinder press setup.]{Example of a modAT4rMS behavior specification for a two-cylinder press setup.~\cite{Obermeier:2015aa}}
-	\label{fig:modAT_beh}
-\end{figure}
 The presented specification language is powerful as enables the developer to specify system behavior and structure in a clear and concise manner.
 In terms of effectiveness, the approach covers many levels of abstraction and covers the full extent of a PLC's capability.
 Additionally, the definition of the structure and behavior of a system can be translated into IEC 61131-3 code to directly run on a~\acrshort{acn:plc}.
@@ -282,7 +285,8 @@ It was designed as a modeling language for the IEC 61131-3 implementation langua
 Therefore, it is a reasonable candidate for a code generation-based modeling approach.
 The language uses a similar syntax and semantic to petri nets.
 \begin{figure}[h]
-	\includegraphics[width=\textwidth]{./Figures/grafcet_ex.jpg}
+	\centering
+	\includegraphics[width=0.6\textwidth]{./Figures/grafcet_ex.jpg}
 	\caption[Example of a GRAFCET specification.]{Example of a GRAFCET specification.~\cite{JULIUS2017173}}
 	\label{fig:grafcet}
 \end{figure}
