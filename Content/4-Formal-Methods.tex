@@ -26,10 +26,10 @@ This includes modeling the process environment and the process itself rather tha
 They also allow for simulation of the system components making evaluation and validation closer to the real-world.
 Subsection~\ref{sec:sub:mb} investigates approaches using this specification type.
 
-To compare the different approaches, I look at four criteria that are critical for effective control program development.
-For the selection of the comparison criteria I looked at~\cite{VH:2014}.
+To compare the different approaches,  four criteria that are critical for effective control program development are chosen.
+The selection of the criteria is similar to the ones used in~\cite{VH:2014}
 \citeauthor{VH:2014} compare different model-based PLC programming methods.
-From their criteria I selected the four most important ones:
+From their criteria the four most important ones are selected:
 \begin{itemize}
 	\item \textbf{Effectiveness} describes the quality and expression strength of the programming method.
 	It is determined by the supported programming features, the modularity, the available reuse and the correctness of the model and the transformation.
@@ -47,7 +47,7 @@ From their criteria I selected the four most important ones:
 \label{sec:non_model}
 %% ==============================
 
-Non-model based approaches don't incorporate any knowledge of the actual process but validate the system for all possible input parameters.
+Non-model based approaches don't incorporate any knowledge of the actual process but verify the system for all possible input parameters.
 This is especially interesting as it allows for an analysis that is not dependent on assumptions about the process or its environment.
 
 A historically common formalization method for non-model-based approaches are Petri Nets.
@@ -97,10 +97,10 @@ Listing~\ref{lst:ltl:st} shows the~\acrshort{acn:ST} code for equations~\ref{eq:
 As the specifications are complex formulas the efficiency of the method is reduced significantly.
 The complex nature makes intensive training and knowledge in modal logic necessary.
 This has an adverse impact on the user acceptance and real-world applicability as the specifications are too complex and error prone.
-In addition, they propose a transformation to model checker code that allows to verify the integrity of the model.
-This is done by finding a sequence of inputs where one of the LTL formula is not satisfied.
+For verification of the specification, they propose a transformation to model checker code.
+This code is used to find a sequence of inputs where one of the LTL formula is not satisfied.
 If such a sequence is found it shows that the specification is incomplete.
-If the LTL formulas are valid, there is no possible state of variables where the program is not acting as specified.
+If this is not the case, there is no possible state of variables where the program is not acting as specified.
 With this method, the verification of the control program is easier as it can be done directly from the specification.
 In combination with the substantial number of available constructs in~\acrshort{acn:ltl} formula, this provides a considerable effectiveness.
 The only thing missing due to formula-based specification are objects or instances.
@@ -124,18 +124,13 @@ The distinct roles and guarantees ease the use of specifying behavior, which all
 They provide an Eclipse based tool named ScenarioTools to create these specifications.
 This greatly increases the actual real-world applicability of the approach, as well as the user acceptance due to increased usability and support during development.
 For verification and generation, they first transform the specification into a game graph.
-This can be used to create a General Reactivity 1 problem instance, where LTL formula with the form
-\begin{equation}
-\left(\land_{i}\square\diamond a_{i} \right) \rightarrow \left(\land_{i}\square\diamond g_{i} \right)
-\end{equation}
-must be solved.
-In the example $a_{i}$ represents assumption i is satisfied and $g_{i}$ represents guarantee i is satisfied.
-If there is a path through the graph where the assumptions hold true, but the guarantees do not, it's an error in the specification.
-This model checking method can be implemented via an~\acrshort{acn:ltl} solver for the transformed GR(1) specification extracted from the specification.
+This can be used to create a General Reactivity 1 problem instance, where a set of~\acrshort{acn:ltl} on the assumptions and guarantees has to be satisfied.
+If this is possible, the specification is in itself sound.
+This method can be implemented via an~\acrshort{acn:ltl} solver for the transformed GR(1) specification extracted from the specification.
 To generate the ST code, this graph is transformed into nested state machines.
 Per controller there is a primary state machine modeling the current controller status.
 In every possible controller status, there are secondary state machines modeling the uncontrollable input components.
-This code generation scheme is beneficial for the efficiency and real-world usability of the approach as the developer can trace changes to the code back to the model and the other way around.
+This code generation scheme is beneficial for the efficiency and real-world usability of the approach as the developer can trace changes in the code back to the model and the other way around.
 With traceability and maintainability being key factors in industrial applications, this is an important feature.
 The authors state that this transformation is valid by design.
 %===========================
@@ -259,9 +254,9 @@ It can transform a Simulink model with input, output and storage nodes as well a
 For this to work, the blocks must exclusively consist of logical or mathematical functions.
 This makes the coder remarkably effective as most of the Simulink features can be ported to a PLC without additional effort.
 The simplicity also increases the user acceptance and real-world applicability of the method.
-\citeauthor{7535242}~\cite{7535242} describe a workflow using this~\enquote{Simulink PLC Coder} and the~\enquote{Simulink C Coder}\footnote{\url{https://de.mathworks.com/help/dsp/ug/generate-c-code-from-simulink-model.html}} to develop, verify and deploy a model created in Simulink on a PLC.
+\citeauthor{7535242}~\cite{7535242} describe a workflow using this~\enquote{\textit{Simulink PLC Coder}} and the~\enquote{\textit{Simulink C Coder}}\footnote{\url{https://de.mathworks.com/help/dsp/ug/generate-c-code-from-simulink-model.html}} to develop, verify and deploy a model created in Simulink on a PLC.
 As an addition to the Simulink based workflow, they propose using a C-based model checker for verification.
-For verification, they transform the Simulink model to C code, which is combined with manually written C code.
+They transform the Simulink model to C code, which is then combined with manually written C code.
 The manually created C code, contains the assertions, invariants and model parameters in a format conform to the~\acrfull{acn:cbmc}.
 The checker runs the model and verifies the defined model invariants and parameters.
 This allows for a deeper validation of the model than the other methods offered by Simulink.
@@ -315,8 +310,8 @@ This allows to verify some general features like the absence of dead code or dea
 Additionally, they support the specification of module invariants that can be checked on the final composite model.
 In~\cite{10.1007/978-3-319-33693-0_32} they specify methods to transform existing PLC code to an intermediate model and compare this to an existing PLCSpecif specification.
 To verify the code generated from PLCSpecif as described in~\cite{7819191} they use the same method.
-For code generation they use, a model to model transformation.
-To fulfill the requirement of readable generated code, the first transform into an abstract ST representation and then use simplification algorithms to reduce the complexity of the code.
-The abstract ST representation is then transformed into the actual ST code.
-This also increases portability as some ST language features are not supported on all PLC platforms.
+They implement a code generation method that focuses on creating readable \& traceable source code.
+For this they use a platform independent representation that is then transformed into platform specific ST code.
+This is beneficial for the real-world applicability and efficiency of the approach.
+It also increases the user-acceptance as the generated code is easy to read and alter manually without additional effort.
 The correctness of the transformation is ensured as the structure that is implemented in ST is the transition graph that can be implemented directly.
